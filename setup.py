@@ -38,7 +38,7 @@ setup(
     description="convert CSV, PRN, etc. to XML.",
     install_requires=[
         "cutplace>=0.6.4",
-        "loxun>=1.2"
+        "loxun>=1.2",
         "nose>=1.0"
     ],
     entry_points = {
