@@ -1,5 +1,7 @@
 *.pyc
 *.pyo
+.DS_Store
 /MANIFEST
 /build
 /dist
+/cxm.egg-info

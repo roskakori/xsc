@@ -1,0 +1,4 @@
+Konstante: 9008390100400;Meldepflichtiger;Konstante: 2010-01-01;Konstante: 2010-12-31
+SpecifiedNotification_TypeCode;ObligatedParty_ID;CoveredPeriod_StartDate;CoveredPeriod_EndDate
+9008390100400;9008390012345;2010-01-01;2010-12-31
+9008390100400;9008390987654;2010-01-01;2010-12-31

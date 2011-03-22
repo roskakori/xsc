@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?cxm for edmNotification?>
+<?cxm end for?>
+<!-- CXM template for EDM balance. -->
+<waste:WasteHandlingNotification
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:waste="http://edm.gv.at/schema/WasteBalanceInterfaceV2">
+  <!--
+  <?cxm for edmNotification?>
+  -->
+  <SpecifiedNotification>
+    <!-- Konstante -->
+    <TypeCode>9008390100400</TypeCode>
+    <ObligatedParty>
+      <!-- Meldepflichtiger -->
+      <ID>9008390197349</ID>
+    </ObligatedParty>
+    <CoveredPeriod>
+      <!-- Constant -->
+      <StartDate>2010-01-01</StartDate>
+      <!-- Constant -->
+      <EndDate>2010-12-31</EndDate>
+    </CoveredPeriod>
+  </SpecifiedNotification>
+  <!--
+  <?cxm end for?>
+  -->
+  <?cxm for edmPeriod?>
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>${edmPeriod.WasteMaterialMovement_TypeCode}</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>${edmPeriod.HandOverParty_ID}</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich-->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>${edmPeriod.TakeOverParty_ID}</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen-->
+              <!-- ID>9008390518854</ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  <?cxm end for?>
+</waste:WasteHandlingNotification>
+
+
