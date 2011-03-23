@@ -1,6 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<?cxm for edmNotification?>
-<?cxm end for?>
 <!-- CXM template for EDM balance. -->
 <waste:WasteHandlingNotification
     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
