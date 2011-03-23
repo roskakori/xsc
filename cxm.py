@@ -22,12 +22,11 @@ import logging
 import loxun
 import sys
 
-from collections import namedtuple #@UnusedImport
-from string import Template
 from xml.dom import minidom
 from xml.dom.minidom import Node 
 
-__version__ = "0.1"
+__version_info__ = (0, 0, 1)
+__version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _log = logging.getLogger('cxm')
 
@@ -414,11 +413,6 @@ class Converter(object):
         source = self._sourceNameToSourceMap[name]
         source.setData(dataFilePath)
         
-    def _processedText(self, text):
-        template = Template(text)
-        template.substitute(self._variables)
-        return text
-
     def write(self, targetXmlFilePath):
         assert targetXmlFilePath is not None
 
