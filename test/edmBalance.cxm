@@ -5,27 +5,23 @@
 <waste:WasteHandlingNotification
     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:waste="http://edm.gv.at/schema/WasteBalanceInterfaceV2">
-  <!--
   <?cxm for edmNotification?>
-  -->
   <SpecifiedNotification>
     <!-- Konstante -->
-    <TypeCode>9008390100400</TypeCode>
+    <TypeCode>${edmNotification.SpecifiedNotification_TypeCode}</TypeCode>
     <ObligatedParty>
       <!-- Meldepflichtiger -->
-      <ID>9008390197349</ID>
+      <ID>${edmNotification.ObligatedParty_ID}</ID>
     </ObligatedParty>
     <CoveredPeriod>
-      <!-- Constant -->
-      <StartDate>2010-01-01</StartDate>
-      <!-- Constant -->
-      <EndDate>2010-12-31</EndDate>
+      <StartDate>${edmNotification.CoveredPeriod_StartDate}</StartDate>
+      <EndDate>${edmNotification.CoveredPeriod_EndDate}</EndDate>
     </CoveredPeriod>
   </SpecifiedNotification>
-  <!--
   <?cxm end for?>
-  -->
+  <?cxm for edmNotification?>
   <?cxm for edmPeriod?>
+  <?cxm if edmNotification.ObligatedParty_ID == edmPeriod.TakeOverParty_ID?>
   <SpecifiedSinglePeriodWasteHandlingNotification>
     <SpecifiedWasteHandlingNotificationEntry>
       <WasteMaterialMovement>
@@ -69,6 +65,8 @@
       </WasteMaterialMovement>
     </SpecifiedWasteHandlingNotificationEntry>
   </SpecifiedSinglePeriodWasteHandlingNotification>
+  <?cxm end if?>
+  <?cxm end for?>
   <?cxm end for?>
 </waste:WasteHandlingNotification>
 
