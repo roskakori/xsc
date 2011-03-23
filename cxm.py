@@ -75,6 +75,22 @@ class CxmForNode(CxmNode):
                     cxmNode.write(xmlWriter, sourceNameToSourceMap)
             del globals()[self.rider]
 
+class CxmIfNode(CxmNode):
+    """
+    Node to write children only if a condition if fulfilled. The condition is text describing a
+    Python expression to be processed using ``eval()``.
+    """
+    def __init__(self, condition):
+        super(CxmIfNode, self).__init__('if')
+        self.condition = condition
+
+    def write(self, xmlWriter, sourceNameToSourceMap):
+        if self.childNodes:
+            conditionFulfilled = eval(self.condition)
+            if conditionFulfilled:
+                for cxmNode in self.childNodes:
+                    cxmNode.write(xmlWriter, sourceNameToSourceMap)
+
 class ElementNode(CxmNode):
     def __init__(self, name, attributes):
         super(ElementNode, self).__init__(name)
@@ -313,14 +329,15 @@ class CxmTemplate(object):
                 target = node.target
                 data = node.data
                 if target == 'cxm':
-                    words = data.split()
+                    # TODO: Use Python tokenizer to split and syntax check cxm processing instructions. 
+                    words = data.strip().split()
                     if not words:
                         raise ValueError('cxm command must be specified')
                     command = words[0]
                     wordCount = len(words)
                     if command == 'for':
                         if wordCount != 2:
-                            raise ValueError(u'for command must match <?for {rider}?> but is: %s' % data)
+                            raise ValueError(u'for command must match <?cxm for {rider}?> but is: %s' % data)
                         rider = words[1]
                         cxmForNode = CxmForNode(rider)
                         print u'%sadd cxm command: %s %s' % (indent, command, rider)
@@ -334,6 +351,17 @@ class CxmTemplate(object):
                         commandToEnd = words[1]
                         print u'%send cxm command: %s' % (indent, commandToEnd)
                         self._popCommand(commandToEnd)
+                    elif command == 'if':
+                        if wordCount < 2:
+                            raise ValueError(u'if command must match <?cxm if {condition}?> but is: %s' % data)
+                        # TODO: Remove check below once Python tokenizer is used to parse cxm processing instructions.
+                        if not data.startswith('if'):
+                            raise NotImplementedError("cannot process white space before 'if'")
+                        condition = data[2:]
+                        cxmIfNode = CxmIfNode(condition)
+                        print u'%sadd cxm command: %s %s' % (indent, command, condition)
+                        self._addChild(cxmIfNode)
+                        self._pushCommand(cxmIfNode)
                     else:
                         raise ValueError(u'cannot process unknown cxm command: <?cxm %s ...?>' % target)
                 else:
