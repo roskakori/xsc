@@ -63,22 +63,22 @@ class SplitDataSourceDefinitionTest(unittest.TestCase):
 
 class TextTemplateTest(unittest.TestCase):
     def testCanBuildTemplateWithTextAtEnd(self):
-        textTemplate = cxm._TextTemplate('hello')
+        textTemplate = cxm._InlineTemplate('hello')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [('text', u'hello')])
 
     def testCanBuildTemplateWithDollar(self):
-        textTemplate = cxm._TextTemplate('$$')
+        textTemplate = cxm._InlineTemplate('$$')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [('text', u'$')])
 
     def testCanBuildTemplateWithCode(self):
-        textTemplate = cxm._TextTemplate('${2 + 3}')
+        textTemplate = cxm._InlineTemplate('${2 + 3}')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [('code', u'2 + 3')])
 
     def testCanBuildMixedTemplate(self):
-        textTemplate = cxm._TextTemplate('hugo has ${200 + 300}$$ and he likes it')
+        textTemplate = cxm._InlineTemplate('hugo has ${200 + 300}$$ and he likes it')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [
             ('text', u'hugo has '),
@@ -114,7 +114,7 @@ class MainTest(unittest.TestCase):
         actualArguments.extend(arguments)
         try:
             cxm.main(actualArguments)
-            self.fail("cmx.main() must raise SystemExit")
+            self.fail("cmx.main() must raise SystemExit") # pragma: no cover
         except SystemExit, error:
             self.assertEqual(error.code, expectedExitCode, 'exit code is %d instead of %d with arguments: %s' % (error.code, expectedExitCode, actualArguments))
 
@@ -134,7 +134,7 @@ class MainTest(unittest.TestCase):
             'edmPeriod:%s@%s' % (_testFilePath('edmBalancePeriod.csv'), _testFilePath('cid_edmBalancePeriod.xls'))
         ])
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     logging.basicConfig(level=logging.INFO)
     logging.getLogger('cutplace').setLevel(logging.WARNING)
     unittest.main()

@@ -55,7 +55,7 @@ class CxmNode(object):
             self.childNodes.append(cxmNodeToAdd)
 
     def write(self, xmlWriter, sourceNameToSourceMap):
-        raise NotImplementedError()
+        raise NotImplementedError() # pragma: no cover
 
 class _Variables(object):
     """
@@ -109,7 +109,7 @@ class ElementNode(CxmNode):
         self.attributeTemplates = []
         for attributeName, attributeValue in attributes:
             try:
-                attributeTemplate = _TextTemplate(attributeValue)
+                attributeTemplate = _InlineTemplate(attributeValue)
             except:
                 # TODO: Create proper error with location and attribute text.
                 _log.error(u'%s.%s = %r', name, attributeName, attributeValue)
@@ -143,7 +143,7 @@ class DataNode(CxmNode):
 class TextNode(DataNode):
     def __init__(self, data):
         super(TextNode, self).__init__('text', data)
-        self.template = _TextTemplate(data)
+        self.template = _InlineTemplate(data)
     
     def write(self, xmlWriter, sourceNameToSourceMap):
         assert xmlWriter
@@ -165,10 +165,19 @@ class ProcessInstructionNode(DataNode):
         assert xmlWriter
         xmlWriter.processingInstruction(self.target, self.data)
 
-class TemplateSyntaxError(ValueError):
+class CxmInlineSyntaxError(CxmSyntaxError):
+    # TODO: Add error location.
     pass
 
-class _TextTemplate(object):
+class CxmInlineValueError(CxmError):
+    # TODO: Add error location.
+    pass
+
+class _InlineTemplate(object):
+    """
+    Internal representation of text that might use ``${...}`` to inline Python
+    variables and code.
+    """
     _StateInText = 't'
     _StateInTextAfterDollar = '$'
     _StateInPlaceHolder = '*'
@@ -178,45 +187,49 @@ class _TextTemplate(object):
 
     def __init__(self, templateDescripton):
         assert templateDescripton is not None
-        self._state = _TextTemplate._StateInText
+        self._state = _InlineTemplate._StateInText
         self._items = []
         self._text = u''
         for ch in templateDescripton:
-            if self._state == _TextTemplate._StateInText:
+            if self._state == _InlineTemplate._StateInText:
                 if ch == '$':
-                    self._append(_TextTemplate._ItemText, _TextTemplate._StateInTextAfterDollar)
+                    self._append(_InlineTemplate._ItemText, _InlineTemplate._StateInTextAfterDollar)
                 self._text += ch
-            elif self._state == _TextTemplate._StateInTextAfterDollar:
+            elif self._state == _InlineTemplate._StateInTextAfterDollar:
                 assert self._text == u'$', "text=%r" % self._text
                 if ch == '$':
-                    self._append(_TextTemplate._ItemText, _TextTemplate._StateInText)
+                    self._append(_InlineTemplate._ItemText, _InlineTemplate._StateInText)
                 elif ch == '{':
-                    self._state = _TextTemplate._StateInPlaceHolder
+                    self._state = _InlineTemplate._StateInPlaceHolder
                     self._text = u''
                 else:
                     # TODO: Add location to error message.
-                    raise TemplateSyntaxError(u'$ must be followed by $ or { but found: %r' % ch)
-            elif self._state == _TextTemplate._StateInPlaceHolder:
+                    raise CxmInlineSyntaxError(u'$ must be followed by $ or { but found: %r' % ch)
+            elif self._state == _InlineTemplate._StateInPlaceHolder:
                 if ch == '}':
-                    self._append(_TextTemplate._ItemCode, _TextTemplate._StateInText)
+                    self._append(_InlineTemplate._ItemCode, _InlineTemplate._StateInText)
                 else:
                     self._text += ch
             else:
                 assert False
-        if self._state == _TextTemplate._StateInText:
-            self._append(_TextTemplate._ItemText)
-        elif self._state == _TextTemplate._StateInTextAfterDollar:
+        if self._state == _InlineTemplate._StateInText:
+            self._append(_InlineTemplate._ItemText)
+        elif self._state == _InlineTemplate._StateInTextAfterDollar:
             # TODO: Add location to error message.
-            raise TemplateSyntaxError(u'$ at end of template must be followed by $')
-        elif self._state == _TextTemplate._StateInPlaceHolder:
-            raise TemplateSyntaxError('place holder must end with }')
+            raise CxmInlineSyntaxError(u'$ at end of template must be followed by $')
+        elif self._state == _InlineTemplate._StateInPlaceHolder:
+            raise CxmInlineSyntaxError('place holder must end with }')
         else:
             assert False
 
     def eval(self):
+        """
+        The value resulting by evaluating expressions embedded in ``${...}`` using
+        current ``globals()``.
+        """
         result = u''
         for itemType, itemText in self._items:
-            if itemType == _TextTemplate._ItemCode:
+            if itemType == _InlineTemplate._ItemCode:
                 try:
                     evaluatedText = eval(itemText)
                     result += evaluatedText
@@ -226,15 +239,15 @@ class _TextTemplate(object):
                         _log.error(u'  %s = %r', key, globals()[key])
                     _log.error(u'cannot evaluate expression: %s: %s' % (itemText, error))
                     raise
-            elif itemType == _TextTemplate._ItemText:
+            elif itemType == _InlineTemplate._ItemText:
                 result += itemText
             else:
                 assert False
         return result
 
     def _append(self, itemType, newState=None):
-        assert itemType in (_TextTemplate._ItemCode, _TextTemplate._ItemText)
-        assert newState in (None, _TextTemplate._StateInPlaceHolder, _TextTemplate._StateInText, _TextTemplate._StateInTextAfterDollar)
+        assert itemType in (_InlineTemplate._ItemCode, _InlineTemplate._ItemText)
+        assert newState in (None, _InlineTemplate._StateInPlaceHolder, _InlineTemplate._StateInText, _InlineTemplate._StateInTextAfterDollar)
         if self._text:
             # TODO: De-HTML-escape '&lt;' to '<' and so on.
             self._items.append((itemType, self._text))
@@ -246,14 +259,14 @@ class _TextTemplate(object):
         return unicode(self).encode('utf-8')
     
     def __repr__(self):
-        return '_TextTemplate(%s)' % self._items
+        return '_InlineTemplate(%s)' % self._items
 
     def unicode(self):
         result = u''
         for itemType, itemText in self._items:
-            if itemType == _TextTemplate._ItemCode:
+            if itemType == _InlineTemplate._ItemCode:
                 result += u'${' + itemText + '}'
-            elif itemType == _TextTemplate._ItemText:
+            elif itemType == _InlineTemplate._ItemText:
                 result += itemText.replace(u'$', u'$$')
             else:
                 assert False
@@ -344,12 +357,12 @@ class CxmTemplate(object):
                     # TODO: Use Python tokenizer to split and syntax check cxm processing instructions. 
                     words = data.strip().split()
                     if not words:
-                        raise ValueError('cxm command must be specified')
+                        raise CxmSyntaxError('cxm command must be specified')
                     command = words[0]
                     wordCount = len(words)
                     if command == 'for':
                         if wordCount != 2:
-                            raise ValueError(u'for command must match <?cxm for {rider}?> but is: %s' % data)
+                            raise CxmSyntaxError(u'for command must match <?cxm for {rider}?> but is: %s' % data)
                         rider = words[1]
                         cxmForNode = CxmForNode(rider)
                         print u'%sadd cxm command: %s %s' % (indent, command, rider)
@@ -357,15 +370,15 @@ class CxmTemplate(object):
                         self._pushCommand(cxmForNode)
                     elif command == 'end':
                         if wordCount == 1:
-                            raise ValueError(u'cxm command to end must be specified')
+                            raise CxmInlineSyntaxError(u'cxm command to end must be specified')
                         if wordCount > 2:
-                            raise ValueError(u'text after cxm command to end must be removed: %r' % words[2:])
+                            raise CxmInlineSyntaxError(u'text after cxm command to end must be removed: %r' % words[2:])
                         commandToEnd = words[1]
                         print u'%send cxm command: %s' % (indent, commandToEnd)
                         self._popCommand(commandToEnd)
                     elif command == 'if':
                         if wordCount < 2:
-                            raise ValueError(u'if command must match <?cxm if {condition}?> but is: %s' % data)
+                            raise CxmSyntaxError(u'if command must match <?cxm if {condition}?> but is: %s' % data)
                         # TODO: Remove check below once Python tokenizer is used to parse cxm processing instructions.
                         if not data.startswith('if'):
                             raise NotImplementedError("cannot process white space before 'if'")
@@ -375,7 +388,7 @@ class CxmTemplate(object):
                         self._addChild(cxmIfNode)
                         self._pushCommand(cxmIfNode)
                     else:
-                        raise ValueError(u'cannot process unknown cxm command: <?cxm %s ...?>' % target)
+                        raise CxmSyntaxError(u'cannot process unknown cxm command: <?cxm %s ...?>' % target)
                 else:
                     raise NotImplementedError(u'target=%r' % target)
             else:
@@ -557,6 +570,6 @@ def main(arguments=None):
 
     return exitCode, exitError
 
-if __name__ == '__main__':
+if __name__ == '__main__': # pragma: no cover
     logging.basicConfig(level=logging.INFO)
     sys.exit(main()[0])
