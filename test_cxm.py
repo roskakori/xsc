@@ -20,7 +20,46 @@ import logging
 import os.path
 import unittest
 
-_EdmBalanceCxmPath = os.path.join('test', 'edmBalance.cxm')
+def _testFilePath(name):
+    return os.path.join('test', name)
+
+_EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
+
+class CheckPythonNameTest(unittest.TestCase):
+    def testCanProcessValidName(self):
+        cxm._checkPythonName('test', 'some_name')
+
+    def testCanProcessValidUnicodeName(self):
+        cxm._checkPythonName('test', u'some_name')
+
+    def testCanProcessNameWithWhtitespace(self):
+        cxm._checkPythonName('test', '\tsome_name \n ')
+
+    def testRejectsNumber(self):
+        self.assertRaises(cxm.CxmSyntaxError, cxm._checkPythonName, 'test', '123')
+
+    def testRejectsTwoNames(self):
+        self.assertRaises(cxm.CxmSyntaxError, cxm._checkPythonName, 'test', 'two names')
+
+    def testRejectsEmptyName(self):
+        self.assertRaises(cxm.CxmSyntaxError, cxm._checkPythonName, 'test', '')
+
+class SplitDataSourceDefinitionTest(unittest.TestCase):
+    def testCanSplitNameDataAndCid(self):
+        self.assertEqual(cxm.splitDataSourceDefintion('a:b@c'), ('a', 'b', 'c'))
+
+    def testCanSplitNameAndDataWithoutCid(self):
+        self.assertEqual(cxm.splitDataSourceDefintion('a:b'), ('a', 'b', None))
+
+    def testCanSplitNameWithoutDataAndCid(self):
+        self.assertEqual(cxm.splitDataSourceDefintion('a'), ('a', None, None))
+
+    def testFailWithEmptyName(self):
+        self.assertRaises(cxm.CxmSyntaxError, cxm.splitDataSourceDefintion, '')
+        self.assertRaises(cxm.CxmSyntaxError, cxm.splitDataSourceDefintion, ' \t\n')
+
+    def testFailWithNonPythonName(self):
+        self.assertRaises(cxm.CxmSyntaxError, cxm.splitDataSourceDefintion, '123')
 
 class TextTemplateTest(unittest.TestCase):
     def testCanBuildTemplateWithTextAtEnd(self):
@@ -57,16 +96,43 @@ class CxmTest(unittest.TestCase):
         template = cxm.CxmTemplate(_EdmBalanceCxmPath)
         sourceNameToPathMap = {
             'edmNotification': (
-                os.path.join('test', 'cid_edmBalanceNotification.xls'),
-                os.path.join('test', 'edmBalanceNotification.csv')
+                os.path.join('test', 'edmBalanceNotification.csv'),
+                os.path.join('test', 'cid_edmBalanceNotification.xls')
             ),
             'edmPeriod': (
-                os.path.join('test', 'cid_edmBalancePeriod.xls'),
-                os.path.join('test', 'edmBalancePeriod.csv')
+                os.path.join('test', 'edmBalancePeriod.csv'),
+                os.path.join('test', 'cid_edmBalancePeriod.xls')
             )
         }
         targetXmlFilePath = os.path.join('test', 'edmBalance.xml')
         cxm.convert(template, sourceNameToPathMap, targetXmlFilePath)
+
+class MainTest(unittest.TestCase):
+    def _testMainRaisesSystemExit(self, arguments, expectedExitCode=0):
+        assert arguments
+        actualArguments = ['test']
+        actualArguments.extend(arguments)
+        try:
+            cxm.main(actualArguments)
+            self.fail("cmx.main() must raise SystemExit")
+        except SystemExit, error:
+            self.assertEqual(error.code, expectedExitCode, 'exit code is %d instead of %d with arguments: %s' % (error.code, expectedExitCode, actualArguments))
+
+    def testCanShowVersion(self):
+        self._testMainRaisesSystemExit(['--version'])
+
+    def testCanShowHelp(self):
+        self._testMainRaisesSystemExit(['--help'])
+
+    def testCanValidateEdm(self):
+        cxm.main([_EdmBalanceCxmPath])
+
+    def testCanProcessEdm(self):
+        cxm.main([
+            _EdmBalanceCxmPath,
+            'edmNotification:%s@%s' % (_testFilePath('edmBalanceNotification.csv'), _testFilePath('cid_edmBalanceNotification.xls')),
+            'edmPeriod:%s@%s' % (_testFilePath('edmBalancePeriod.csv'), _testFilePath('cid_edmBalancePeriod.xls'))
+        ])
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)

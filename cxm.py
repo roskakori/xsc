@@ -20,7 +20,12 @@ import cutplace
 import cutplace.interface
 import logging
 import loxun
+import optparse
+import os
 import sys
+import token
+import tokenize
+import StringIO
 
 from xml.dom import minidom
 from xml.dom.minidom import Node 
@@ -28,7 +33,15 @@ from xml.dom.minidom import Node
 __version_info__ = (0, 0, 1)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
 
+_Description = "convert CSV, PRN, etc. to XML based on a template"
+
 _log = logging.getLogger('cxm')
+
+class CxmError(Exception):
+    pass
+
+class CxmSyntaxError(CxmError):
+    pass
 
 class CxmNode(object):
     def __init__(self, name=None):
@@ -368,9 +381,9 @@ class CxmTemplate(object):
             else:
                 raise NotImplementedError(u'nodeType=%r' % nodeType)
     
-class _Source(object):
+class DataSource(object):
     """
-    Source interface and data to be converted to XML.
+    Source data and interface to be converted to XML.
     """
     def __init__(self, name):
         assert name
@@ -391,7 +404,55 @@ class _Source(object):
             self.data = []
             for row in cutplace.interface.validatedRows(self.interface, dataFile):
                 self.data.append(row)
-    
+
+def _checkPythonName(name, text):
+    assert name
+    assert text is not None
+    TokyTypesToSkip = set([token.DEDENT, token.ENDMARKER, token.INDENT, token.NEWLINE])
+    tokenCount = 0
+    for toky in tokenize.generate_tokens(StringIO.StringIO(text).readline):
+        tokyType = toky[0]
+        if tokyType not in TokyTypesToSkip:
+            tokenCount += 1
+            if tokenCount == 1:
+                if tokyType != token.NAME:
+                    raise CxmSyntaxError(u'%s must be a Python name but is: %r' % (name, text))
+            else:
+                # TODO: Improve error message by describing what a valid Python name actually is.
+                raise CxmSyntaxError(u'%s must be a valid Python name but is (type=%s): %r' % (name, tokyType, text))
+    if not tokenCount:
+        raise CxmSyntaxError(u'%s must be a Python name instead of being empty')
+
+def splitDataSourceDefintion(definition):
+    """
+    The name, data path and icd path of a data source definition in ``text`` using the template
+    ``<name>:<data path>@<cid path>``.
+    """
+    assert definition is not None
+
+    colonIndex = definition.find(':')
+    hasColon = (colonIndex != -1)
+    if hasColon:
+        dataSourceName = definition[:colonIndex]
+    else:
+        dataSourceName = definition
+    _checkPythonName('data source name', dataSourceName)
+
+    if hasColon:
+        dataSourcePath = definition[colonIndex + 1:]
+        # TODO: Allow to escape @ by using @@.
+        atIndex = dataSourcePath.find('@')
+        if atIndex == -1:
+            cidPath = None
+        else:
+            cidPath = dataSourcePath[atIndex + 1:]
+            dataSourcePath = dataSourcePath[:atIndex]
+    else:
+        dataSourcePath = None
+        cidPath = None
+    result = (dataSourceName, dataSourcePath, cidPath)
+    return result
+
 class Converter(object):
     def __init__(self, template):
         assert template is not None
@@ -403,7 +464,7 @@ class Converter(object):
     def setInterface(self, name, interface):
         assert name
         assert interface is not None
-        source = _Source(name)
+        source = DataSource(name)
         source.setInterface(interface)
         self._sourceNameToSourceMap[name] = source
 
@@ -425,7 +486,7 @@ class Converter(object):
 def convert(template, sourceNameToSourceMap, targetXmlFilePath):
     converter = Converter(template)
     for name, source in sourceNameToSourceMap.items():
-        interfaceFilePath, dataFilePath = source
+        dataFilePath, interfaceFilePath = source
         interface = cutplace.interface.InterfaceControlDocument()
         interface.read(interfaceFilePath)
         converter.setInterface(name, interface)
@@ -433,12 +494,42 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath):
     converter.write(targetXmlFilePath)
 
 def _parsedOptions(arguments):
-    return None, None, None
+    usage = 'usage: %prog [options] TEMPLATE [DATASOURCE ...]'
+    epilog = 'TEMPLATE is an XML file typically using \'.cxm\' as suffix. DATASOURCE describes a data source using \'NAME:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/cxm/>.'
+    parser = optparse.OptionParser(usage=usage, description=_Description, epilog=epilog, version=__version__)
+    parser.add_option('-o', '--output',dest='outXmlPath', metavar='FILE',
+        help='XML file where to store output (default: same as TEMPLATE but with suffix \'.xml\'')
+
+    options, others = parser.parse_args(arguments)
+    if not others:
+        parser.error('TEMPLATE to process must be specified')
+    cxmTemplatePath = others[0]
+    sourceDefinitions = others[1:]
+    
+    # Create sources from text matching: 'name:cid::data'
+    dataSourceMap = {}
+    for sourceDefinition in sourceDefinitions:
+        try:
+            name, dataPath, icdPath = splitDataSourceDefintion(sourceDefinition)
+            if name in dataSourceMap:
+                parser.error(u'duplicate data source name must be resolved: %s' % name)
+            dataSourceMap[name] = (dataPath, icdPath)
+        except CxmSyntaxError, error:
+            parser.error('cannot process data source definition: %s' % error)
+
+    # Compute output file.
+    if options.outXmlPath is None:
+        XmlSuffix = '.xml'
+        baseCxmTemplatePath, cxmTemplateSuffix = os.path.splitext(cxmTemplatePath)
+        if cxmTemplateSuffix.lower() == XmlSuffix.lower():
+            parser.error('--output must be specified or suffix of TEMPLATEFILE but be changed to something other than %r' % cxmTemplateSuffix)
+        options.outXmlPath = baseCxmTemplatePath + XmlSuffix
+    return options, cxmTemplatePath, dataSourceMap
 
 def main(arguments=None):
     """
     Main function for command line call returning a tuple
-    ``(exitCode, error)``. In cause everything worked out, the result is
+    ``(exitCode, error)``. In case everything worked out, the result is
     ``(0, None)``.
     """
     if arguments == None:
@@ -446,12 +537,26 @@ def main(arguments=None):
     else:
         actualArguments = arguments
 
-    logging.basicConfig(level=logging.INFO)
+    exitCode = 1
+    exitError = None
+    try:
+        options, cxmTemplatePath, dataSourceMap = _parsedOptions(actualArguments)
+        template = CxmTemplate(cxmTemplatePath)
+        if dataSourceMap:
+            convert(template, dataSourceMap, options.outXmlPath)
+        exitCode = 0
+    except KeyboardInterrupt, error:
+        _log.error('interrupted by user')
+        exitError = error
+    except EnvironmentError, error:
+        _log.error(u'%s', error)
+        exitError = error
+    except Exception, error:
+        _log.exception(error)
+        exitError = error
 
-    # Parse and validate command line options.
-    options, xmlOutFilePath, csvInFilePath = _parsedOptions(actualArguments)
-
-    return 0, None
+    return exitCode, exitError
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     sys.exit(main()[0])

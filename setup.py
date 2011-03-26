@@ -35,7 +35,7 @@ setup(
     name="cxm",
     version=cxm.__version__,
     py_modules=["cxm"],
-    description="convert CSV, PRN, etc. to XML.",
+    description=cxm._Description,
     install_requires=[
         "cutplace>=0.6.4",
         "loxun>=1.2",
