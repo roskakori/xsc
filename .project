@@ -3,6 +3,7 @@
 	<name>cxm</name>
 	<comment></comment>
 	<projects>
+		<project>cutplace</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

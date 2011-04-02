@@ -1,6 +1,10 @@
 """
 Cxm is a command line tool and Python module to convert column based files such
 as CSV and PRN to hierarchical XML files.
+
+It uses a template, which is a valid XML document itself with XML processing
+instructions to express loops and conditionals. Loops iterate over data files
+row by row. XML attributes and text can use inline Python code to embed data.
 """
 # Copyright (C) 2011 Thomas Aglassinger
 #
@@ -16,19 +20,20 @@ as CSV and PRN to hierarchical XML files.
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import cutplace
-import cutplace.interface
 import logging
-import loxun
 import optparse
 import os
+import re
 import sys
 import token
 import tokenize
 import StringIO
-
 from xml.dom import minidom
 from xml.dom.minidom import Node 
+
+import cutplace
+import cutplace.interface
+import loxun
 
 __version_info__ = (0, 0, 1)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
@@ -41,6 +46,9 @@ class CxmError(Exception):
     pass
 
 class CxmSyntaxError(CxmError):
+    pass
+
+class CxmValueError(CxmError):
     pass
 
 class CxmNode(object):
@@ -81,11 +89,17 @@ class CxmForNode(CxmNode):
         variables = _Variables()
         for row in source.data:
             variables.setNamesAndValues(source.interface.fieldNames, row)
+            oldVariables = globals().get('_cxmVariables')
+            globals()['_cxmVariables'] = variables
             globals()[self.rider] = variables
             if self.childNodes:
                 for cxmNode in self.childNodes:
                     cxmNode.write(xmlWriter, sourceNameToSourceMap)
             del globals()[self.rider]
+            if oldVariables is not None:
+                globals()['_cxmVariables'] = oldVariables
+            else:
+                del globals()['_cxmVariables']
 
 class CxmIfNode(CxmNode):
     """
@@ -184,6 +198,9 @@ class _InlineTemplate(object):
     
     _ItemText = 'text'
     _ItemCode = 'code'
+    
+    attributeErrorRegEx = re.compile("\\'(?P<className>[a-zA-Z_][a-zA-Z0-9_]*)\\'.+\\'(?P<attributeName>[a-zA-Z_][a-zA-Z0-9_]*)\\'")
+        # Regular expression to extract attribute name from attribute error.
 
     def __init__(self, templateDescripton):
         assert templateDescripton is not None
@@ -222,6 +239,19 @@ class _InlineTemplate(object):
         else:
             assert False
 
+    def _possibleVariableName(self, attributeError):
+        """
+        Name of variable in ``attributeError`` or ``None``.
+        """
+        assert attributeError
+        assert isinstance(attributeError, AttributeError)
+        attributeErrorMatch = _InlineTemplate.attributeErrorRegEx.match(unicode(attributeError))
+        if attributeErrorMatch:
+            className = attributeErrorMatch.group('className')
+            if className == _Variables.__name__:
+                result = attributeErrorMatch.group('attributeName')
+        return result
+
     def eval(self):
         """
         The value resulting by evaluating expressions embedded in ``${...}`` using
@@ -234,11 +264,18 @@ class _InlineTemplate(object):
                     evaluatedText = eval(itemText)
                     result += evaluatedText
                 except Exception, error:
-                    _log.error(u'globals:')
-                    for key in sorted(globals().keys()):
-                        _log.error(u'  %s = %r', key, globals()[key])
-                    _log.error(u'cannot evaluate expression: %s: %s' % (itemText, error))
-                    raise
+                    _log.error(u'cannot evaluate expression: %s', itemText)
+                    _log.error(u'currently defined variables:')
+                    variables = globals()['_cxmVariables']
+                    for variableName in sorted(variables.__dict__.keys()):
+                        _log.error(u'  %s = %s', variableName, repr(variables.__dict__[variableName]))
+                    detailMessage = unicode(error)
+                    if isinstance(error, AttributeError):
+                        # Extract unknown attribute name from error message.
+                        unknownVariableName = self._possibleVariableName(error)
+                        if unknownVariableName:
+                            detailMessage = u'cannot find column "%s"' % unknownVariableName
+                    raise CxmValueError(u'cannot evaluate expression: %r: %s' % (itemText, detailMessage))
             elif itemType == _InlineTemplate._ItemText:
                 result += itemText
             else:
@@ -278,6 +315,7 @@ class CxmTemplate(object):
         self._cxmStack = [self.content]
         self._commandStack = []
     
+        _log.info('read template "%s"', cxmFilePath)
         domDocument = minidom.parse(cxmFilePath)
         self._processNode(domDocument)
 
@@ -338,17 +376,17 @@ class CxmTemplate(object):
                 else:
                     tagName = node.tagName
                 attributes = node.attributes.items()
-                print u'%sadd tag: %s; %s' % (indent, tagName, attributes)
+                _log.debug(u'%sadd tag: %s; %s', indent, tagName, attributes)
                 elementNode = ElementNode(tagName, attributes)
                 self._addChild(elementNode)
                 self._pushCxmNode(elementNode)
                 self._processNode(node)
                 self._popCxmNode()
             elif nodeType == Node.TEXT_NODE:
-                print u'%sadd text: %r' % (indent, node.data)
+                _log.debug(u'%sadd text: %r' , indent, node.data)
                 self._addChild(TextNode(node.data))
             elif nodeType == Node.COMMENT_NODE:
-                print u'%sadd comment: %r' % (indent, node.data)
+                _log.debug(u'%sadd comment: %r' , indent, node.data)
                 self._addChild(CommentNode(node.data))
             elif nodeType == Node.PROCESSING_INSTRUCTION_NODE:
                 target = node.target
@@ -365,7 +403,7 @@ class CxmTemplate(object):
                             raise CxmSyntaxError(u'for command must match <?cxm for {rider}?> but is: %s' % data)
                         rider = words[1]
                         cxmForNode = CxmForNode(rider)
-                        print u'%sadd cxm command: %s %s' % (indent, command, rider)
+                        _log.debug(u'%sadd cxm command: %s %s', indent, command, rider)
                         self._addChild(cxmForNode)
                         self._pushCommand(cxmForNode)
                     elif command == 'end':
@@ -374,7 +412,7 @@ class CxmTemplate(object):
                         if wordCount > 2:
                             raise CxmInlineSyntaxError(u'text after cxm command to end must be removed: %r' % words[2:])
                         commandToEnd = words[1]
-                        print u'%send cxm command: %s' % (indent, commandToEnd)
+                        _log.debug(u'%send cxm command: %s', indent, commandToEnd)
                         self._popCommand(commandToEnd)
                     elif command == 'if':
                         if wordCount < 2:
@@ -384,7 +422,7 @@ class CxmTemplate(object):
                             raise NotImplementedError("cannot process white space before 'if'")
                         condition = data[2:]
                         cxmIfNode = CxmIfNode(condition)
-                        print u'%sadd cxm command: %s %s' % (indent, command, condition)
+                        _log.debug(u'%sadd cxm command: %s %s', indent, command, condition)
                         self._addChild(cxmIfNode)
                         self._pushCommand(cxmIfNode)
                     else:
@@ -496,14 +534,19 @@ class Converter(object):
                     cxmNode.write(self._xml, self._sourceNameToSourceMap)
             self._xml = None
 
-def convert(template, sourceNameToSourceMap, targetXmlFilePath):
+def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding='utf-8'):
     converter = Converter(template)
-    for name, source in sourceNameToSourceMap.items():
+    for dataName, source in sourceNameToSourceMap.items():
         dataFilePath, interfaceFilePath = source
-        interface = cutplace.interface.InterfaceControlDocument()
-        interface.read(interfaceFilePath)
-        converter.setInterface(name, interface)
-        converter.setData(name, dataFilePath)
+        _log.info('read data "%s" from "%s"', dataName, dataFilePath)
+        if interfaceFilePath:
+            interface = cutplace.interface.InterfaceControlDocument()
+            interface.read(interfaceFilePath)
+        else:
+            with open(dataFilePath, 'rb') as dataFile:
+                interface = cutplace.interface.createSniffedInterfaceControlDocument(dataFile, encoding=autoDataEncoding)
+        converter.setInterface(dataName, interface)
+        converter.setData(dataName, dataFilePath)
     converter.write(targetXmlFilePath)
 
 def _parsedOptions(arguments):
@@ -535,7 +578,7 @@ def _parsedOptions(arguments):
         XmlSuffix = '.xml'
         baseCxmTemplatePath, cxmTemplateSuffix = os.path.splitext(cxmTemplatePath)
         if cxmTemplateSuffix.lower() == XmlSuffix.lower():
-            parser.error('--output must be specified or suffix of TEMPLATEFILE but be changed to something other than %r' % cxmTemplateSuffix)
+            parser.error('--output must be specified or suffix of TEMPLATE must be changed to something other than %r' % cxmTemplateSuffix)
         options.outXmlPath = baseCxmTemplatePath + XmlSuffix
     return options, cxmTemplatePath, dataSourceMap
 
@@ -553,7 +596,7 @@ def main(arguments=None):
     exitCode = 1
     exitError = None
     try:
-        options, cxmTemplatePath, dataSourceMap = _parsedOptions(actualArguments)
+        options, cxmTemplatePath, dataSourceMap = _parsedOptions(actualArguments[1:])
         template = CxmTemplate(cxmTemplatePath)
         if dataSourceMap:
             convert(template, dataSourceMap, options.outXmlPath)

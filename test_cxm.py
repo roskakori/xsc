@@ -1,5 +1,5 @@
 """
-Test for cxm
+Test for cxm.
 """
 # Copyright (C) 2011 Thomas Aglassinger
 #
@@ -24,6 +24,7 @@ def _testFilePath(name):
     return os.path.join('test', name)
 
 _EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
+_CustomersCxmPath = _testFilePath('customers.cxm')
 
 class CheckPythonNameTest(unittest.TestCase):
     def testCanProcessValidName(self):
@@ -88,7 +89,7 @@ class TextTemplateTest(unittest.TestCase):
         ])
 
 class CxmTest(unittest.TestCase):
-    def testCanParseEdmBalanceCxm(self):
+    def testCanValidateEdmBalanceCxm(self):
         cxmTemplate = cxm.CxmTemplate(_EdmBalanceCxmPath)
         self.assertTrue(cxmTemplate)
 
@@ -107,9 +108,12 @@ class CxmTest(unittest.TestCase):
         targetXmlFilePath = os.path.join('test', 'edmBalance.xml')
         cxm.convert(template, sourceNameToPathMap, targetXmlFilePath)
 
+    def testCanConverLoansBalance(self):
+        template = cxm.CxmTemplate(_CustomersCxmPath)
+
 class MainTest(unittest.TestCase):
     def _testMainRaisesSystemExit(self, arguments, expectedExitCode=0):
-        assert arguments
+        assert arguments is not None
         actualArguments = ['test']
         actualArguments.extend(arguments)
         try:
@@ -125,7 +129,7 @@ class MainTest(unittest.TestCase):
         self._testMainRaisesSystemExit(['--help'])
 
     def testCanValidateEdm(self):
-        cxm.main([_EdmBalanceCxmPath])
+        cxm.main(['test', _EdmBalanceCxmPath])
 
     def testCanProcessEdm(self):
         cxm.main([
@@ -133,6 +137,16 @@ class MainTest(unittest.TestCase):
             'edmNotification:%s@%s' % (_testFilePath('edmBalanceNotification.csv'), _testFilePath('cid_edmBalanceNotification.xls')),
             'edmPeriod:%s@%s' % (_testFilePath('edmBalancePeriod.csv'), _testFilePath('cid_edmBalancePeriod.xls'))
         ])
+
+    def testCanProcessCustomers(self):
+        cxm.main([
+            'test',
+            _CustomersCxmPath,
+            'customers:%s' % _testFilePath('customers.csv'),
+        ])
+
+    def testFailsOnMissingTemplate(self):
+        self._testMainRaisesSystemExit([], 2)
 
 if __name__ == '__main__': # pragma: no cover
     logging.basicConfig(level=logging.INFO)
