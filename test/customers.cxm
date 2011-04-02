@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- A simple list of all customers. -->
+<customers>
+  <?cxm for customers?>
+  <person>
+    <surname>${customers.surname}</surname>
+    <firstname>${customers.surname}</firstname>
+    <dateOfBirth>${customers.dateOfBirth}</dateOfBirth>
+  </person>
+  <?cxm end for?>
+</customers>
