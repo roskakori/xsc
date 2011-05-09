@@ -38,7 +38,7 @@ import loxun
 __version_info__ = (0, 0, 1)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
 
-_Description = "convert CSV, PRN, etc. to XML based on a template"
+_Description = 'convert CSV, PRN, etc. to XML based on a template'
 
 _log = logging.getLogger('cxm')
 
@@ -258,10 +258,18 @@ class _InlineTemplate(object):
         current ``globals()``.
         """
         result = u''
+
+        # If there are no variables (for example when using Python constants or expressions
+        # without a <?cxm for?>), use an empty dummy variable dump.
+        if '_cxmVariables' not in globals():
+            globals()['_cxmVariables'] = _Variables()
+
         for itemType, itemText in self._items:
             if itemType == _InlineTemplate._ItemCode:
                 try:
                     evaluatedText = eval(itemText)
+                    if not isinstance(evaluatedText, basestring):
+                        evaluatedText = unicode(evaluatedText)
                     result += evaluatedText
                 except Exception, error:
                     _log.error(u'cannot evaluate expression: %s', itemText)
@@ -275,6 +283,7 @@ class _InlineTemplate(object):
                         unknownVariableName = self._possibleVariableName(error)
                         if unknownVariableName:
                             detailMessage = u'cannot find column "%s"' % unknownVariableName
+                    _log.exception(error)
                     raise CxmValueError(u'cannot evaluate expression: %r: %s' % (itemText, detailMessage))
             elif itemType == _InlineTemplate._ItemText:
                 result += itemText
@@ -425,6 +434,19 @@ class CxmTemplate(object):
                         _log.debug(u'%sadd cxm command: %s %s', indent, command, condition)
                         self._addChild(cxmIfNode)
                         self._pushCommand(cxmIfNode)
+                    elif command == 'import':
+                        # TODO: Use python tokenizer to validate that module name is a Python name.
+                        # TODO: Add 'import x as y' syntax.
+                        if wordCount == 1:
+                            raise CxmInlineSyntaxError(u'Python module to import must be specified')
+                        if wordCount > 2:
+                            raise CxmInlineSyntaxError(u'text after Python module to import must be removed: %r' % words[2:])
+                        moduleToImport = words[1]
+                        try:
+                            _log.info('import %s', moduleToImport)
+                            globals()[moduleToImport] = __import__(moduleToImport)
+                        except Exception, error:
+                            raise CxmError(u'cannot cxm import module %r: %s' % (moduleToImport, error))
                     else:
                         raise CxmSyntaxError(u'cannot process unknown cxm command: <?cxm %s ...?>' % target)
                 else:

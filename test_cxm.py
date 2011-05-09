@@ -25,6 +25,7 @@ def _testFilePath(name):
 
 _EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
 _CustomersCxmPath = _testFilePath('customers.cxm')
+_ImportCxmPath = _testFilePath('import.cxm')
 
 class CheckPythonNameTest(unittest.TestCase):
     def testCanProcessValidName(self):
@@ -87,6 +88,13 @@ class TextTemplateTest(unittest.TestCase):
             ('text', u'$'),
             ('text', u' and he likes it')
         ])
+
+class CxmImportTest(unittest.TestCase):
+    def testCanResolveImportedSymbols(self):
+        template = cxm.CxmTemplate(_ImportCxmPath)
+        self.assertTrue(template)
+        targetXmlFilePath = os.path.join('test', 'import.xml')
+        cxm.convert(template, {}, targetXmlFilePath)
 
 class CxmTest(unittest.TestCase):
     def testCanValidateEdmBalanceCxm(self):
