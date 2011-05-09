@@ -23,9 +23,10 @@ import unittest
 def _testFilePath(name):
     return os.path.join('test', name)
 
-_EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
 _CustomersCxmPath = _testFilePath('customers.cxm')
+_EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
 _ImportCxmPath = _testFilePath('import.cxm')
+_PythonCxmPath = _testFilePath('python.cxm')
 
 class CheckPythonNameTest(unittest.TestCase):
     def testCanProcessValidName(self):
@@ -94,6 +95,13 @@ class CxmImportTest(unittest.TestCase):
         template = cxm.CxmTemplate(_ImportCxmPath)
         self.assertTrue(template)
         targetXmlFilePath = os.path.join('test', 'import.xml')
+        cxm.convert(template, {}, targetXmlFilePath)
+
+class CxmPythonTest(unittest.TestCase):
+    def testCanProcessPythonCode(self):
+        template = cxm.CxmTemplate(_PythonCxmPath)
+        self.assertTrue(template)
+        targetXmlFilePath = os.path.join('test', 'python.xml')
         cxm.convert(template, {}, targetXmlFilePath)
 
 class CxmTest(unittest.TestCase):

@@ -5,6 +5,75 @@ as CSV and PRN to hierarchical XML files.
 It uses a template, which is a valid XML document itself with XML processing
 instructions to express loops and conditionals. Loops iterate over data files
 row by row. XML attributes and text can use inline Python code to embed data.
+
+
+Importing Python modules
+------------------------
+
+To import a Python module for usage by CXM expressions, use
+
+  <?cxm import some_module?>
+
+For example:
+
+  <?cxm import errno?>
+
+This imports the Python standard module `errno` so it can be used
+by CXM expressions, for example:
+
+  <text>access error code = ${errno.EACCES}</text>
+
+
+Executing Python code
+---------------------
+
+To execute arbitrary Python code, use
+
+  <?cxm python
+  code
+  ?>
+
+For example:
+
+  <?cxm python
+  import errno
+  global accessErrorCode
+  accessErrorCode = errno.EACCES
+  ?>
+
+
+Traversing data
+---------------
+
+To traverse all rows in a data source specified on the command line, use
+
+  <?cxm for dataSource?>
+  ...
+  <?cxm end for?>
+
+For example, consider a data source defined using
+
+  cxm ... customer:customers.csv@icd_customers.xls
+
+The name under which the data source is available for cxm is `customer`. The data
+to process are stored in a CSV file in `customers.csv`. A description of the file as a
+cutplace interface definition is stored in `icd_customers.xls`.
+
+To add a tag `<customer>` for each customer in `customers.csv`, use
+
+  <?cxm for customer?>
+  <customer id="${customder.id}" surname="${customer.lastName}" .../>
+  <?cxm end for?>
+
+
+Processing conditions
+---------------------
+
+Example:
+
+  <?cxm if customer.id = loan.customer_id?>
+  ...
+  <?cxm end if?>
 """
 # Copyright (C) 2011 Thomas Aglassinger
 #
@@ -116,6 +185,18 @@ class CxmIfNode(CxmNode):
             if conditionFulfilled:
                 for cxmNode in self.childNodes:
                     cxmNode.write(xmlWriter, sourceNameToSourceMap)
+
+class CxmPythonNode(CxmNode):
+    """
+    Node to execute arbitrary Python code.
+    """
+    def __init__(self, code):
+        assert code is not None
+        super(CxmPythonNode, self).__init__('python')
+        self.code = code
+
+    def write(self, xmlWriter, sourceNameToSourceMap):
+        exec self.code
 
 class ElementNode(CxmNode):
     def __init__(self, name, attributes):
@@ -447,6 +528,11 @@ class CxmTemplate(object):
                             globals()[moduleToImport] = __import__(moduleToImport)
                         except Exception, error:
                             raise CxmError(u'cannot cxm import module %r: %s' % (moduleToImport, error))
+                    elif command == 'python':
+                        code = data[len('python'):]
+                        cmxPythonNode = CxmPythonNode(code)
+                        _log.debug(u'%sadd cxm command: %s %s', indent, command, code)
+                        self._addChild(cmxPythonNode)
                     else:
                         raise CxmSyntaxError(u'cannot process unknown cxm command: <?cxm %s ...?>' % target)
                 else:
@@ -573,7 +659,7 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding
 
 def _parsedOptions(arguments):
     usage = 'usage: %prog [options] TEMPLATE [DATASOURCE ...]'
-    epilog = 'TEMPLATE is an XML file typically using \'.cxm\' as suffix. DATASOURCE describes a data source using \'NAME:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/cxm/>.'
+    epilog = 'TEMPLATE is an XML file typically using \'.cxm\' as suffix. DATASOURCE describes a data source using \'NAME[:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/cxm/>.'
     parser = optparse.OptionParser(usage=usage, description=_Description, epilog=epilog, version=__version__)
     parser.add_option('-o', '--output',dest='outXmlPath', metavar='FILE',
         help='XML file where to store output (default: same as TEMPLATE but with suffix \'.xml\'')
