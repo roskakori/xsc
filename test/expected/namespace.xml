@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><!-- A simple list of all customers using namespaced tags. --><some:customers xmlns:some="http://example.com/some.xsd">
+  <some:person/>
+  
+  <some:person>
+    <surname>Doe</surname>
+    <firstname>Doe</firstname>
+    <dateOfBirth>1957-03-08</dateOfBirth>
+  </some:person>
+  
+  <some:person>
+    <surname>Miller</surname>
+    <firstname>Miller</firstname>
+    <dateOfBirth>1946-10-04</dateOfBirth>
+  </some:person>
+  
+  <some:person>
+    <surname>Webster</surname>
+    <firstname>Webster</firstname>
+    <dateOfBirth>1974-12-23</dateOfBirth>
+  </some:person>
+  
+</some:customers>

@@ -104,7 +104,7 @@ import cutplace
 import cutplace.interface
 import loxun
 
-__version_info__ = (0, 0, 1)
+__version_info__ = (0, 0, 2)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _Description = 'convert CSV, PRN, etc. to XML based on a template'
@@ -462,10 +462,7 @@ class CxmTemplate(object):
             nodeType = node.nodeType
             indent = '  ' * 2 * len(self._cxmStack)
             if nodeType == Node.ELEMENT_NODE:
-                if node.prefix:
-                    tagName = u'%s:%s' % (node.prefix, node.tagName)
-                else:
-                    tagName = node.tagName
+                tagName = node.tagName
                 attributes = node.attributes.items()
                 _log.debug(u'%sadd tag: %s; %s', indent, tagName, attributes)
                 elementNode = ElementNode(tagName, attributes)

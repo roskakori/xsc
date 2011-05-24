@@ -27,7 +27,25 @@ _CustomersCxmPath = _testFilePath('customers.cxm')
 _EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
 _EmptyCxmPath = _testFilePath('empty.cxm')
 _ImportCxmPath = _testFilePath('import.cxm')
+_NamespaceCxmPath = _testFilePath('namespace.cxm')
 _PythonCxmPath = _testFilePath('python.cxm')
+
+class _ExpectedFileTest(unittest.TestCase):
+    def assertFileMatches(self, actualFilePath):
+        assert actualFilePath is not None
+        actualFolderPath, actualNamePath = os.path.split(actualFilePath)
+        expectedFilePath = os.path.join(actualFolderPath, 'expected', actualNamePath)
+        with open(expectedFilePath, 'rb') as expectedFile:
+            with open(actualFilePath, 'rb') as actualFile:
+                lineNumber = 1
+                hasLines = True
+                while hasLines:
+                    actualLine = actualFile.readline()
+                    expectedLine = expectedFile.readline()
+                    if not actualLine or not expectedLine:
+                        hasLines = False
+                    self.assertEqual(actualLine.rstrip('\n\r'), expectedLine.rstrip('\n\r'), 'file "%s", line %d:\n  a:%r\n  e:%r' % (actualFilePath, lineNumber, actualLine, expectedLine))
+                    lineNumber += 1
 
 class CheckPythonNameTest(unittest.TestCase):
     def testCanProcessValidName(self):
@@ -128,7 +146,11 @@ class CxmTest(unittest.TestCase):
     def testCanConvertLoansBalance(self):
         template = cxm.CxmTemplate(_CustomersCxmPath)
 
-class MainTest(unittest.TestCase):
+class MainTest(_ExpectedFileTest):
+    def assertXmlFileMatches(self, cxmFilePath):
+        assert cxmFilePath is not None
+        self.assertFileMatches(os.path.splitext(cxmFilePath)[0] + '.xml')
+
     def _testMainRaisesSystemExit(self, arguments, expectedExitCode=0):
         assert arguments is not None
         actualArguments = ['test']
@@ -157,6 +179,7 @@ class MainTest(unittest.TestCase):
             'edmPeriod:%s@%s' % (_testFilePath('edmBalancePeriod.csv'), _testFilePath('cid_edmBalancePeriod.xls'))
         ])
         self.assertEqual(exitCode, 0)
+        self.assertXmlFileMatches(_EdmBalanceCxmPath)
 
     def testCanProcessCustomers(self):
         exitCode, _ = cxm.main([
@@ -165,6 +188,7 @@ class MainTest(unittest.TestCase):
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)
+        self.assertXmlFileMatches(_CustomersCxmPath)
 
     def testCanProcessEmptyConstructs(self):
         exitCode, _ = cxm.main([
@@ -173,6 +197,16 @@ class MainTest(unittest.TestCase):
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)
+        self.assertXmlFileMatches(_EmptyCxmPath)
+
+    def testCanProcessNamespace(self):
+        exitCode, _ = cxm.main([
+            'test',
+            _NamespaceCxmPath,
+            'customers:%s' % _testFilePath('customers.csv'),
+        ])
+        self.assertEqual(exitCode, 0)
+        self.assertXmlFileMatches(_NamespaceCxmPath)
 
     def testFailsOnMissingTemplate(self):
         self._testMainRaisesSystemExit([], 2)

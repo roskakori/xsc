@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><!-- A simple list of all customers. --><customers>
+  <person/>
+  
+  <person>
+    <surname>Doe</surname>
+    <firstname>Doe</firstname>
+    <dateOfBirth>1957-03-08</dateOfBirth>
+  </person>
+  
+  <person>
+    <surname>Miller</surname>
+    <firstname>Miller</firstname>
+    <dateOfBirth>1946-10-04</dateOfBirth>
+  </person>
+  
+  <person>
+    <surname>Webster</surname>
+    <firstname>Webster</firstname>
+    <dateOfBirth>1974-12-23</dateOfBirth>
+  </person>
+  
+</customers>

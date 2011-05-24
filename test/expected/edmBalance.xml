@@ -1,0 +1,1954 @@
+<?xml version="1.0" encoding="utf-8"?><!-- CXM template for EDM balance. --><waste:WasteHandlingNotification xmlns:waste="http://edm.gv.at/schema/WasteBalanceInterfaceV2" xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance">
+  
+  <SpecifiedNotification>
+    <!-- Konstante -->
+    <TypeCode>9008390100400</TypeCode>
+    <ObligatedParty>
+      <!-- Meldepflichtiger -->
+      <ID>9008390012345</ID>
+    </ObligatedParty>
+    <CoveredPeriod>
+      <StartDate>2010-01-01</StartDate>
+      <EndDate>2010-12-31</EndDate>
+    </CoveredPeriod>
+  </SpecifiedNotification>
+  
+  <SpecifiedNotification>
+    <!-- Konstante -->
+    <TypeCode>9008390100400</TypeCode>
+    <ObligatedParty>
+      <!-- Meldepflichtiger -->
+      <ID>9008390987654</ID>
+    </ObligatedParty>
+    <CoveredPeriod>
+      <StartDate>2010-01-01</StartDate>
+      <EndDate>2010-12-31</EndDate>
+    </CoveredPeriod>
+  </SpecifiedNotification>
+  
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>00123456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>00987654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>01234567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390098765</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390098765</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390023456</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390034567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390034567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390012345</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390087654</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390987654</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390034567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390987654</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  <SpecifiedSinglePeriodWasteHandlingNotification>
+    <SpecifiedWasteHandlingNotificationEntry>
+      <WasteMaterialMovement>
+        <!-- Buchungsart der Abfallbewegung, normale Übernahme von Abfall -->
+        <TypeCode>9008390101544</TypeCode>
+        <WasteHandOverMovedMaterial>
+          <HandOverParty>
+            <!-- GLN Abfallübergeber -->
+            <ID>9008390034567</ID>
+          </HandOverParty>
+          <SpecifiedLocation>
+     				<!-- MaterialLocationType -->
+     					<PostalAddress>
+     					  <!-- Referenz 3862  040 für AT aktuell Konstante für Österreich -->
+     					  <CountryID>040</CountryID>
+     					</PostalAddress>
+     				<!-- /MaterialLocationType -->
+          </SpecifiedLocation>
+        </WasteHandOverMovedMaterial>
+        <WasteTakeOverMovedMaterial>
+          <TakeOverParty>
+            <!-- GLN Übernehmer des Abfalls. -->
+            <ID>9008390987654</ID>
+          </TakeOverParty>
+          <!-- SpecifiedLocation -->
+            <!-- SpecifiedInstallation -->
+              <!-- Anlagen-GLN momentan nicht zu berücksichtigen -->
+              <!-- ID&gt;9008390518854&lt;/ID -->
+            <!-- /SpecifiedInstallation -->
+          <!-- /SpecifiedLocation -->
+        </WasteTakeOverMovedMaterial>
+        <MovedMaterial>
+          <!-- Abfall-GTIN aus RefList 5174. -->
+          <ClassificationCode>9008390024010</ClassificationCode>
+          <MassMeasurement>
+            <!-- GTIN aus RefList 7299. -->
+            <QuantificationTypeCode>9008390100004</QuantificationTypeCode>
+            <DeterminedMeasure unitCode="KGM">2650040</DeterminedMeasure>
+          </MassMeasurement>
+        </MovedMaterial>
+      </WasteMaterialMovement>
+    </SpecifiedWasteHandlingNotificationEntry>
+  </SpecifiedSinglePeriodWasteHandlingNotification>
+  
+  
+  
+  
+  
+  
+  
+</waste:WasteHandlingNotification>
