@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Various constructs left empty -->
+<data>
+  <empty/>
+  <?cxm for customers?><?cxm end for?>
+  <?cxm if True?><?cxm end if?>
+</data>

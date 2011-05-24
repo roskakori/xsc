@@ -222,8 +222,9 @@ class ElementNode(CxmNode):
             else:
                 processedAttributes[name] = attributeValue
         xmlWriter.startTag(self.name, processedAttributes)
-        for cxmNode in self.childNodes:
-            cxmNode.write(xmlWriter, sourceNameToSourceMap)
+        if self.childNodes:
+            for cxmNode in self.childNodes:
+                cxmNode.write(xmlWriter, sourceNameToSourceMap)
         xmlWriter.endTag(self.name)
             
 class DataNode(CxmNode):
@@ -643,6 +644,11 @@ class Converter(object):
             self._xml = None
 
 def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding='utf-8'):
+    assert template is not None
+    assert sourceNameToSourceMap is not None
+    assert targetXmlFilePath is not None
+    assert autoDataEncoding is not None
+
     converter = Converter(template)
     for dataName, source in sourceNameToSourceMap.items():
         dataFilePath, interfaceFilePath = source
@@ -652,7 +658,9 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding
             interface.read(interfaceFilePath)
         else:
             with open(dataFilePath, 'rb') as dataFile:
-                interface = cutplace.interface.createSniffedInterfaceControlDocument(dataFile, encoding=autoDataEncoding)
+                _log.info('sniff interface for "%s"', dataFilePath)
+                interface = cutplace.interface.createSniffedInterfaceControlDocument(dataFile, encoding=autoDataEncoding, header=1)
+                _log.info("  found fields: %s", interface.fieldNames)
         converter.setInterface(dataName, interface)
         converter.setData(dataName, dataFilePath)
     converter.write(targetXmlFilePath)
@@ -670,7 +678,7 @@ def _parsedOptions(arguments):
     cxmTemplatePath = others[0]
     sourceDefinitions = others[1:]
     
-    # Create sources from text matching: 'name:cid::data'
+    # Create sources from text matching: 'name:data@cid'
     dataSourceMap = {}
     for sourceDefinition in sourceDefinitions:
         try:
@@ -708,6 +716,9 @@ def main(arguments=None):
         template = CxmTemplate(cxmTemplatePath)
         if dataSourceMap:
             convert(template, dataSourceMap, options.outXmlPath)
+        else:
+            # No data source means: validate *.cxm without conversion.
+            pass
         exitCode = 0
     except KeyboardInterrupt, error:
         _log.error('interrupted by user')
