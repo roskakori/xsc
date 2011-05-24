@@ -37,7 +37,7 @@ setup(
     py_modules=["cxm"],
     description=cxm._Description,
     install_requires=[
-        "coverage>=3.2"
+        "coverage>=3.2",
         "cutplace>=0.6.7",
         "loxun>=1.2",
         "nose>=1.0"
