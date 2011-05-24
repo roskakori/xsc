@@ -27,7 +27,7 @@ Upload release to PyPI::
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from setuptools import setup, find_packages
+from setuptools import setup
 
 import cxm
 
@@ -37,7 +37,8 @@ setup(
     py_modules=["cxm"],
     description=cxm._Description,
     install_requires=[
-        "cutplace>=0.6.4",
+        "coverage>=3.2"
+        "cutplace>=0.6.7",
         "loxun>=1.2",
         "nose>=1.0"
     ],
