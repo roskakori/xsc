@@ -27,6 +27,8 @@ _CustomersCxmPath = _testFilePath('customers.cxm')
 _EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
 _EmptyCxmPath = _testFilePath('empty.cxm')
 _ImportCxmPath = _testFilePath('import.cxm')
+_MissingEndForCxmPath = _testFilePath('brokenMissingEndFor.cxm')
+_MissingEndIfCxmPath = _testFilePath('brokenMissingEndIf.cxm')
 _NamespaceCxmPath = _testFilePath('namespace.cxm')
 _PythonCxmPath = _testFilePath('python.cxm')
 
@@ -210,6 +212,24 @@ class MainTest(_ExpectedFileTest):
 
     def testFailsOnMissingTemplate(self):
         self._testMainRaisesSystemExit([], 2)
+
+    def testFailsOnMissingEndFor(self):
+        # FIXME: Test for assertRaises CxmSyntaxError
+        exitCode, _ = cxm.main([
+            'test',
+            _MissingEndForCxmPath,
+            'customers:%s' % _testFilePath('customers.csv'),
+        ])
+        self.assertEqual(exitCode, 0)
+
+    def testFailsOnMissingEndIf(self):
+        # FIXME: Test for assertRaises CxmSyntaxError
+        exitCode, _ = cxm.main([
+            'test',
+            _MissingEndIfCxmPath,
+            'customers:%s' % _testFilePath('customers.csv'),
+        ])
+        self.assertEqual(exitCode, 0)
 
 if __name__ == '__main__': # pragma: no cover
     logging.basicConfig(level=logging.INFO)

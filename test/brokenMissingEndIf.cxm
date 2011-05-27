@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- An if without a matching end if. -->
+<data>
+  <?cxm if True?>
+  <some/>
+</data>

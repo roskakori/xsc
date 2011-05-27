@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A for loop without a matching end for. -->
+<customers>
+  <?cxm for customers?>
+  <person>
+    <dateOfBirth>${customers.dateOfBirth}</dateOfBirth>
+  </person>
+</customers>
