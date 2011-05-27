@@ -4,6 +4,10 @@ Installer for cxm.
 Developer cheat sheet
 ---------------------
 
+Install developer build:
+
+  $ sudo python setup.py develop
+
 Create the installer archive::
 
   $ python setup.py sdist --formats=zip
