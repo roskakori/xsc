@@ -554,8 +554,6 @@ class DataSource(object):
         self.interface = interface
 
     def setData(self, dataFilePath):
-        _log.info('read data "%s"', dataFilePath)
-        self.interface.validate(dataFilePath)
         with open(dataFilePath, 'rb') as dataFile:
             self.dataFilePath = dataFile
             self.data = []
@@ -626,8 +624,7 @@ class Converter(object):
         self._sourceNameToSourceMap[name] = source
 
     def setData(self, name, dataFilePath):
-        assert name
-        assert name in self._sourceNameToSourceMap, 'data name is %r but must be one of: %s' % (name, sorted(self._sourceNameToSourceMap.keys()))
+        self._validateDataName(name)
         source = self._sourceNameToSourceMap[name]
         source.setData(dataFilePath)
         
@@ -640,6 +637,19 @@ class Converter(object):
                     cxmNode.write(self._xml, self._sourceNameToSourceMap)
             self._xml = None
 
+    def dataFor(self, dataName):
+        self._validateDataName(dataName)
+        dataSource = self._sourceNameToSourceMap[dataName]
+        return dataSource.data
+
+    def _validateDataName(self, name):
+        assert name is not None
+        if not name:
+            raise CxmValueError('data source name must not be empty')
+        # TODO: Validate that ``name`` is a valid Python name.
+        if not name in self._sourceNameToSourceMap:
+            raise CxmValueError('data name is %r but must be one of: %s' % (name, sorted(self._sourceNameToSourceMap.keys())))
+
 def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding='utf-8'):
     assert template is not None
     assert sourceNameToSourceMap is not None
@@ -651,15 +661,17 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding
         dataFilePath, interfaceFilePath = source
         _log.info('read data "%s" from "%s"', dataName, dataFilePath)
         if interfaceFilePath:
+            _log.info('  use interface "%s"', interfaceFilePath)
             interface = cutplace.interface.InterfaceControlDocument()
             interface.read(interfaceFilePath)
         else:
             with open(dataFilePath, 'rb') as dataFile:
-                _log.info('sniff interface for "%s"', dataFilePath)
+                _log.info('  sniff interface')
                 interface = cutplace.interface.createSniffedInterfaceControlDocument(dataFile, encoding=autoDataEncoding, header=1)
-                _log.info("  found fields: %s", interface.fieldNames)
+                _log.info('  found fields: %s', interface.fieldNames)
         converter.setInterface(dataName, interface)
         converter.setData(dataName, dataFilePath)
+        _log.info('  found %d data rows', len(converter.dataFor(dataName)))
     converter.write(targetXmlFilePath)
 
 def _parsedOptions(arguments):
