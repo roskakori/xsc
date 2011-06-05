@@ -104,7 +104,7 @@ import cutplace
 import cutplace.interface
 import loxun
 
-__version_info__ = (0, 0, 2)
+__version_info__ = (0, 1, 0)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _Description = 'convert CSV, PRN, etc. to XML based on a template'
@@ -196,7 +196,7 @@ class CxmPythonNode(CxmNode):
         self.code = code
 
     def write(self, xmlWriter, sourceNameToSourceMap):
-        exec self.code
+        exec self.code in globals()
 
 class ElementNode(CxmNode):
     def __init__(self, name, attributes):

@@ -118,12 +118,13 @@ class CxmImportTest(unittest.TestCase):
         targetXmlFilePath = os.path.join('test', 'import.xml')
         cxm.convert(template, {}, targetXmlFilePath)
 
-class CxmPythonTest(unittest.TestCase):
+class CxmPythonTest(_ExpectedFileTest):
     def testCanProcessPythonCode(self):
         template = cxm.CxmTemplate(_PythonCxmPath)
         self.assertTrue(template)
         targetXmlFilePath = os.path.join('test', 'python.xml')
         cxm.convert(template, {}, targetXmlFilePath)
+        self.assertFileMatches(targetXmlFilePath)
 
 class CxmTest(unittest.TestCase):
     def testCanValidateEdmBalanceCxm(self):

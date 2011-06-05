@@ -2,4 +2,6 @@
 <text><?cxm python
 import errno
 eAccess = errno.EACCES
-?>errno.EACCES = ${errno.EACCES}; eAccess = ${errno.EACCES}</text>
+?>errno.EACCES = ${errno.EACCES}; eAccess = ${eAccess}</text>
+
+
