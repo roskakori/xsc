@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <text><?cxm python
 import errno
-global eAccess
 eAccess = errno.EACCES
-?>errno.EACCES = ${errno.EACCES}; eAccess =  = ${errno.EACCES}</text>
+?>errno.EACCES = ${errno.EACCES}; eAccess = ${errno.EACCES}</text>
