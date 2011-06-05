@@ -320,7 +320,7 @@ import cutplace
 import cutplace.interface
 import loxun
 
-__version_info__ = (0, 1, 0)
+__version_info__ = (0, 1, 1)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _Description = 'convert CSV, PRN, etc. to XML based on a template'
@@ -847,6 +847,7 @@ class Converter(object):
     def write(self, targetXmlFilePath):
         assert targetXmlFilePath is not None
 
+        _log.info('write output "%s"', targetXmlFilePath)
         with open(targetXmlFilePath, 'wb') as targetXmlFile:
             with loxun.XmlWriter(targetXmlFile, pretty=False, sourceEncoding='utf-8') as self._xml:
                 for cxmNode in self._template.content.childNodes:
@@ -884,7 +885,8 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding
             with open(dataFilePath, 'rb') as dataFile:
                 _log.info('  sniff interface')
                 interface = cutplace.interface.createSniffedInterfaceControlDocument(dataFile, encoding=autoDataEncoding, header=1)
-                _log.info('  found fields: %s', interface.fieldNames)
+                humanReadableFieldNames = ', '.join(interface.fieldNames)
+                _log.info('  found fields: %s', humanReadableFieldNames)
         converter.setInterface(dataName, interface)
         converter.setData(dataName, dataFilePath)
         _log.info('  found %d data rows', len(converter.dataFor(dataName)))
@@ -957,6 +959,14 @@ def main(arguments=None):
 
     return exitCode, exitError
 
-if __name__ == '__main__': # pragma: no cover
+def mainWithExit():
+    """
+    Main function for command line call using ``sys.exit()`` to be used
+    for standalone command line application.
+    """
     logging.basicConfig(level=logging.INFO)
+    logging.getLogger('cutplace').setLevel(logging.WARNING)
     sys.exit(main()[0])
+
+if __name__ == '__main__': # pragma: no cover
+    mainWithExit()

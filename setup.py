@@ -48,7 +48,7 @@ setup(
     ],
     entry_points = {
         'console_scripts': [
-            'cxm = cxm:main'
+            'cxm = cxm:mainWithExit'
         ],
     },
     test_suite = "nose.collector",
