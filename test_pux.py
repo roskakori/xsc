@@ -1,5 +1,5 @@
 """
-Test for cxm.
+Test for pux.
 """
 # Copyright (C) 2011 Thomas Aglassinger
 #
@@ -15,7 +15,7 @@ Test for cxm.
 #
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import cxm
+import pux
 import logging
 import os.path
 import unittest
@@ -23,14 +23,14 @@ import unittest
 def _testFilePath(name):
     return os.path.join('test', name)
 
-_CustomersCxmPath = _testFilePath('customers.cxm')
-_EdmBalanceCxmPath = _testFilePath('edmBalance.cxm')
-_EmptyCxmPath = _testFilePath('empty.cxm')
-_ImportCxmPath = _testFilePath('import.cxm')
-_MissingEndForCxmPath = _testFilePath('brokenMissingEndFor.cxm')
-_MissingEndIfCxmPath = _testFilePath('brokenMissingEndIf.cxm')
-_NamespaceCxmPath = _testFilePath('namespace.cxm')
-_PythonCxmPath = _testFilePath('python.cxm')
+_CustomersPuxPath = _testFilePath('customers.pux')
+_EdmBalancePuxPath = _testFilePath('edmBalance.pux')
+_EmptyPuxPath = _testFilePath('empty.pux')
+_ImportPuxPath = _testFilePath('import.pux')
+_MissingEndForPuxPath = _testFilePath('brokenMissingEndFor.pux')
+_MissingEndIfPuxPath = _testFilePath('brokenMissingEndIf.pux')
+_NamespacePuxPath = _testFilePath('namespace.pux')
+_PythonPuxPath = _testFilePath('python.pux')
 
 class _ExpectedFileTest(unittest.TestCase):
     def assertFileMatches(self, actualFilePath):
@@ -51,58 +51,58 @@ class _ExpectedFileTest(unittest.TestCase):
 
 class CheckPythonNameTest(unittest.TestCase):
     def testCanProcessValidName(self):
-        cxm._checkPythonName('test', 'some_name')
+        pux._checkPythonName('test', 'some_name')
 
     def testCanProcessValidUnicodeName(self):
-        cxm._checkPythonName('test', u'some_name')
+        pux._checkPythonName('test', u'some_name')
 
     def testCanProcessNameWithWhtitespace(self):
-        cxm._checkPythonName('test', '\tsome_name \n ')
+        pux._checkPythonName('test', '\tsome_name \n ')
 
     def testRejectsNumber(self):
-        self.assertRaises(cxm.CxmSyntaxError, cxm._checkPythonName, 'test', '123')
+        self.assertRaises(pux.PuxSyntaxError, pux._checkPythonName, 'test', '123')
 
     def testRejectsTwoNames(self):
-        self.assertRaises(cxm.CxmSyntaxError, cxm._checkPythonName, 'test', 'two names')
+        self.assertRaises(pux.PuxSyntaxError, pux._checkPythonName, 'test', 'two names')
 
     def testRejectsEmptyName(self):
-        self.assertRaises(cxm.CxmSyntaxError, cxm._checkPythonName, 'test', '')
+        self.assertRaises(pux.PuxSyntaxError, pux._checkPythonName, 'test', '')
 
 class SplitDataSourceDefinitionTest(unittest.TestCase):
     def testCanSplitNameDataAndCid(self):
-        self.assertEqual(cxm.splitDataSourceDefintion('a:b@c'), ('a', 'b', 'c'))
+        self.assertEqual(pux.splitDataSourceDefintion('a:b@c'), ('a', 'b', 'c'))
 
     def testCanSplitNameAndDataWithoutCid(self):
-        self.assertEqual(cxm.splitDataSourceDefintion('a:b'), ('a', 'b', None))
+        self.assertEqual(pux.splitDataSourceDefintion('a:b'), ('a', 'b', None))
 
     def testCanSplitNameWithoutDataAndCid(self):
-        self.assertEqual(cxm.splitDataSourceDefintion('a'), ('a', None, None))
+        self.assertEqual(pux.splitDataSourceDefintion('a'), ('a', None, None))
 
     def testFailWithEmptyName(self):
-        self.assertRaises(cxm.CxmSyntaxError, cxm.splitDataSourceDefintion, '')
-        self.assertRaises(cxm.CxmSyntaxError, cxm.splitDataSourceDefintion, ' \t\n')
+        self.assertRaises(pux.PuxSyntaxError, pux.splitDataSourceDefintion, '')
+        self.assertRaises(pux.PuxSyntaxError, pux.splitDataSourceDefintion, ' \t\n')
 
     def testFailWithNonPythonName(self):
-        self.assertRaises(cxm.CxmSyntaxError, cxm.splitDataSourceDefintion, '123')
+        self.assertRaises(pux.PuxSyntaxError, pux.splitDataSourceDefintion, '123')
 
 class TextTemplateTest(unittest.TestCase):
     def testCanBuildTemplateWithTextAtEnd(self):
-        textTemplate = cxm._InlineTemplate('hello')
+        textTemplate = pux._InlineTemplate('hello')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [('text', u'hello')])
 
     def testCanBuildTemplateWithDollar(self):
-        textTemplate = cxm._InlineTemplate('$$')
+        textTemplate = pux._InlineTemplate('$$')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [('text', u'$')])
 
     def testCanBuildTemplateWithCode(self):
-        textTemplate = cxm._InlineTemplate('${2 + 3}')
+        textTemplate = pux._InlineTemplate('${2 + 3}')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [('code', u'2 + 3')])
 
     def testCanBuildMixedTemplate(self):
-        textTemplate = cxm._InlineTemplate('hugo has ${200 + 300}$$ and he likes it')
+        textTemplate = pux._InlineTemplate('hugo has ${200 + 300}$$ and he likes it')
         self.assertTrue(textTemplate)
         self.assertEqual(textTemplate._items, [
             ('text', u'hugo has '),
@@ -111,28 +111,28 @@ class TextTemplateTest(unittest.TestCase):
             ('text', u' and he likes it')
         ])
 
-class CxmImportTest(unittest.TestCase):
+class PuxImportTest(unittest.TestCase):
     def testCanResolveImportedSymbols(self):
-        template = cxm.CxmTemplate(_ImportCxmPath)
+        template = pux.PuxTemplate(_ImportPuxPath)
         self.assertTrue(template)
         targetXmlFilePath = os.path.join('test', 'import.xml')
-        cxm.convert(template, {}, targetXmlFilePath)
+        pux.convert(template, {}, targetXmlFilePath)
 
-class CxmPythonTest(_ExpectedFileTest):
+class PuxPythonTest(_ExpectedFileTest):
     def testCanProcessPythonCode(self):
-        template = cxm.CxmTemplate(_PythonCxmPath)
+        template = pux.PuxTemplate(_PythonPuxPath)
         self.assertTrue(template)
         targetXmlFilePath = os.path.join('test', 'python.xml')
-        cxm.convert(template, {}, targetXmlFilePath)
+        pux.convert(template, {}, targetXmlFilePath)
         self.assertFileMatches(targetXmlFilePath)
 
-class CxmTest(unittest.TestCase):
-    def testCanValidateEdmBalanceCxm(self):
-        cxmTemplate = cxm.CxmTemplate(_EdmBalanceCxmPath)
-        self.assertTrue(cxmTemplate)
+class PuxTest(unittest.TestCase):
+    def testCanValidateEdmBalancePux(self):
+        puxTemplate = pux.PuxTemplate(_EdmBalancePuxPath)
+        self.assertTrue(puxTemplate)
 
     def testCanConvertEdmBalance(self):
-        template = cxm.CxmTemplate(_EdmBalanceCxmPath)
+        template = pux.PuxTemplate(_EdmBalancePuxPath)
         sourceNameToPathMap = {
             'edmNotification': (
                 os.path.join('test', 'edmBalanceNotification.csv'),
@@ -144,22 +144,22 @@ class CxmTest(unittest.TestCase):
             )
         }
         targetXmlFilePath = os.path.join('test', 'edmBalance.xml')
-        cxm.convert(template, sourceNameToPathMap, targetXmlFilePath)
+        pux.convert(template, sourceNameToPathMap, targetXmlFilePath)
 
     def testCanConvertLoansBalance(self):
-        template = cxm.CxmTemplate(_CustomersCxmPath)
+        template = pux.PuxTemplate(_CustomersPuxPath)
 
 class MainTest(_ExpectedFileTest):
-    def assertXmlFileMatches(self, cxmFilePath):
-        assert cxmFilePath is not None
-        self.assertFileMatches(os.path.splitext(cxmFilePath)[0] + '.xml')
+    def assertXmlFileMatches(self, puxFilePath):
+        assert puxFilePath is not None
+        self.assertFileMatches(os.path.splitext(puxFilePath)[0] + '.xml')
 
     def _testMainRaisesSystemExit(self, arguments, expectedExitCode=0):
         assert arguments is not None
         actualArguments = ['test']
         actualArguments.extend(arguments)
         try:
-            cxm.main(actualArguments)
+            pux.main(actualArguments)
             self.fail("cmx.main() must raise SystemExit") # pragma: no cover
         except SystemExit, error:
             self.assertEqual(error.code, expectedExitCode, 'exit code is %d instead of %d with arguments: %s' % (error.code, expectedExitCode, actualArguments))
@@ -171,63 +171,63 @@ class MainTest(_ExpectedFileTest):
         self._testMainRaisesSystemExit(['--help'])
 
     def testCanValidateEdm(self):
-        exitCode, _ = cxm.main(['test', _EdmBalanceCxmPath])
+        exitCode, _ = pux.main(['test', _EdmBalancePuxPath])
         self.assertEqual(exitCode, 0)
 
     def testCanProcessEdm(self):
-        exitCode, _ = cxm.main([
+        exitCode, _ = pux.main([
             'test',
-            _EdmBalanceCxmPath,
+            _EdmBalancePuxPath,
             'edmNotification:%s@%s' % (_testFilePath('edmBalanceNotification.csv'), _testFilePath('cid_edmBalanceNotification.xls')),
             'edmPeriod:%s@%s' % (_testFilePath('edmBalancePeriod.csv'), _testFilePath('cid_edmBalancePeriod.xls'))
         ])
         self.assertEqual(exitCode, 0)
-        self.assertXmlFileMatches(_EdmBalanceCxmPath)
+        self.assertXmlFileMatches(_EdmBalancePuxPath)
 
     def testCanProcessCustomers(self):
-        exitCode, _ = cxm.main([
+        exitCode, _ = pux.main([
             'test',
-            _CustomersCxmPath,
+            _CustomersPuxPath,
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)
-        self.assertXmlFileMatches(_CustomersCxmPath)
+        self.assertXmlFileMatches(_CustomersPuxPath)
 
     def testCanProcessEmptyConstructs(self):
-        exitCode, _ = cxm.main([
+        exitCode, _ = pux.main([
             'test',
-            _EmptyCxmPath,
+            _EmptyPuxPath,
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)
-        self.assertXmlFileMatches(_EmptyCxmPath)
+        self.assertXmlFileMatches(_EmptyPuxPath)
 
     def testCanProcessNamespace(self):
-        exitCode, _ = cxm.main([
+        exitCode, _ = pux.main([
             'test',
-            _NamespaceCxmPath,
+            _NamespacePuxPath,
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)
-        self.assertXmlFileMatches(_NamespaceCxmPath)
+        self.assertXmlFileMatches(_NamespacePuxPath)
 
     def testFailsOnMissingTemplate(self):
         self._testMainRaisesSystemExit([], 2)
 
     def testFailsOnMissingEndFor(self):
-        # FIXME: Test for assertRaises CxmSyntaxError
-        exitCode, _ = cxm.main([
+        # FIXME: Test for assertRaises PuxSyntaxError
+        exitCode, _ = pux.main([
             'test',
-            _MissingEndForCxmPath,
+            _MissingEndForPuxPath,
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)
 
     def testFailsOnMissingEndIf(self):
-        # FIXME: Test for assertRaises CxmSyntaxError
-        exitCode, _ = cxm.main([
+        # FIXME: Test for assertRaises PuxSyntaxError
+        exitCode, _ = pux.main([
             'test',
-            _MissingEndIfCxmPath,
+            _MissingEndIfPuxPath,
             'customers:%s' % _testFilePath('customers.csv'),
         ])
         self.assertEqual(exitCode, 0)

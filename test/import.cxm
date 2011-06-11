@@ -1,3 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<?cxm import errno?>
-<text>errno.EACCES = ${errno.EACCES}</text>

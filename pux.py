@@ -1,5 +1,5 @@
 """
-Cxm is a command line tool and Python module to convert column based files
+Pux is a command line tool and Python module to convert column based files
 such as CSV and PRN to hierarchical XML files.
 
 It uses a template, which is a valid XML document itself with XML
@@ -11,10 +11,10 @@ code to embed data.
 Installation
 ------------
 
-Cxm is available from `PyPI <http://pypi.python.org/>`_ and can be
+Pux is available from `PyPI <http://pypi.python.org/>`_ and can be
 installed using::
 
-  $ easy_install cxm
+  $ easy_install pux
 
 Provided you are connected to the internet, this also installs a few
 required Python modules:
@@ -32,7 +32,7 @@ separately.
 Tutorial
 --------
 
-This section provides a tutorial on using cxm to convert a simple CSV file
+This section provides a tutorial on using pux to convert a simple CSV file
 containing customer data in an XML file.
 
 Here is the source CSV file::
@@ -44,7 +44,7 @@ Here is the source CSV file::
 
 As you can see, the first row contains headings for the various columns
 where the other rows contain the actual data. This is the kind of CSV file
-cxm can process out of the box. If your CSV file has header rows or columns
+pux can process out of the box. If your CSV file has header rows or columns
 that cannot be mapped to a header, you either have to remove them manually
 or provide a specific interface control document using `cutplace
 <http://cutplace.sourceforge.net>`_.
@@ -70,7 +70,7 @@ Our goal is to get an XML document that looks like::
     </person>
   </customers>
 
-First, we have to provide a cxm template. This is a XML document by itself
+First, we have to provide a pux template. This is a XML document by itself
 and can contain processing instructions to read data from data sources such
 as CSV files and use inline Python expressions to generate text and XML
 attribute values.
@@ -79,23 +79,23 @@ To get the desired output, we need the following template::
 
   <?xml version="1.0" encoding="utf-8"?>
   <customers>
-    <?cxm for customers?>
+    <?pux for customers?>
     <person>
       <surname>${customers.surname}</surname>
       <firstname>${customers.surname}</firstname>
       <dateOfBirth>${customers.dateOfBirth}</dateOfBirth>
     </person>
-    <?cxm end for?>
+    <?pux end for?>
   </customers>
 
 The line::
 
-  <?cxm for customers?>
+  <?pux for customers?>
 
-tells cxm to read the data source  ``customers`` row by row and generate
+tells pux to read the data source  ``customers`` row by row and generate
 XML code until::
 
-  <?cxm end for?>
+  <?pux end for?>
 
 for each row. As you probably guessed, we are going to point the data
 source ``customers`` to our CSV file.
@@ -104,7 +104,7 @@ In the line::
 
   <surname>${customers.surname}</surname>
 
-the ``${customers.surname}`` tells cxm to insert the value of the row
+the ``${customers.surname}`` tells pux to insert the value of the row
 ``surname`` in current row read from the data source ``customers``.  In the
 CSV file provided, the first data row has a ``surname`` column with the
 value ``Doe``. For the next row, the value is ``Miller`` and so on.
@@ -127,29 +127,29 @@ Note that all values read are unicode strings, so you have to convert them
 to Python ``long``, ``Decimal``, ``datetime`` and so on if you want to use
 them for computations on any of these types.
 
-Now that we have a template (``customers.cxm``) and a data source
+Now that we have a template (``customers.pux``) and a data source
 (``customers.csv``), we can finally generate our XML document. Open a new
 console and change the current folder to the location where the CSV and CXM
 file are stored. Then run::
 
-  $ cxm customers.cxm customers:customers.csv
+  $ pux customers.pux customers:customers.csv
 
-This tells cxm to generate an XML file based on the template
-``customers.cxm`` with a data source named ``customers`` read from the file
+This tells pux to generate an XML file based on the template
+``customers.pux`` with a data source named ``customers`` read from the file
 ``customers.csv``.
 
 By default, the output is stored in the same folder as the template under
 the same name but with the suffix ``.xml``. You can set a specific output
 file using the command line option ``--output``, for example::
 
-  $ cxm --output /tmp/northern_customers.xml customers.cxm customers:customers.csv
+  $ pux --output /tmp/northern_customers.xml customers.pux customers:customers.csv
 
 If ``customers.csv`` has a more complex format than "CSV with a header
 row", you can describe it in a cutplace interface definition in, say,
 ``cid_customers.xls`` and add it to the data source description after an at
 sign (@)::
 
-  $ cxm customers.cxm customers:customers.csv@cid_customers.xls
+  $ pux customers.pux customers:customers.csv@cid_customers.xls
 
 To learn more about cutplace and how you can use it to describe a data
 source, visit <http://cutplace.sourceforge.net>.
@@ -170,9 +170,9 @@ resulting XML code is::
     <img src="bob.png" alt="image of Bob"/>
     This is Bob. 
 
-To set variables to values retrieved from a data source, use ``<?cxm
+To set variables to values retrieved from a data source, use ``<?pux
 for?>`` (see `Traversing data`_). To set variables to specific values using
-possibly complex computations, use ``<?cxm python?>`` (see `Executing
+possibly complex computations, use ``<?pux python?>`` (see `Executing
 Python code`_).
 
 
@@ -181,11 +181,11 @@ Importing Python modules
 
 To import a Python module for usage by CXM expressions, use::
 
-  <?cxm import some_module?>
+  <?pux import some_module?>
 
 For example::
 
-  <?cxm import errno?>
+  <?pux import errno?>
 
 This imports the Python standard module `errno` so it can be used
 by CXM expressions, for example::
@@ -198,20 +198,20 @@ Executing Python code
 
 To execute arbitrary Python code, use::
 
-  <?cxm python
+  <?pux python
   code
   ?>
 
 For example::
 
-  <?cxm python
+  <?pux python
   import errno
   accessErrorCode
   accessErrorCode = errno.EACCES
   ?>
 
 Variables, functions, imports and so are are added to the global scope and
-can be used by later ``<?cxm python?>`` instructions and inline code.
+can be used by later ``<?pux python?>`` instructions and inline code.
 
 
 Traversing data
@@ -219,36 +219,36 @@ Traversing data
 
 To traverse all rows in a data source specified on the command line, use::
 
-  <?cxm for dataSource?>
+  <?pux for dataSource?>
   ...
-  <?cxm end for?>
+  <?pux end for?>
 
 For example, consider a data source defined using::
 
-  $ cxm ... customer:customers.csv@icd_customers.xls
+  $ pux ... customer:customers.csv@icd_customers.xls
 
-The name under which the data source is available for cxm is `customer`.
+The name under which the data source is available for pux is `customer`.
 The data to process are stored in a CSV file in `customers.csv`. A
 description of the file as a cutplace interface definition is stored in
 `icd_customers.xls`.
 
 To add a tag `<customer>` for each customer in `customers.csv`, use::
 
-  <?cxm for customer?>
+  <?pux for customer?>
   <customer id="${customder.id}" surname="${customer.lastName}" .../>
-  <?cxm end for?>
+  <?pux end for?>
 
 
 Conditionals and joins
 ----------------------
 
 Sometimes XML fragments are optional and should show up in the output
-only if certain conditions are met. For such a case, cxm provides a
+only if certain conditions are met. For such a case, pux provides a
 processing instruction of the form::
 
-  <?cxm if condition?>
+  <?pux if condition?>
   ...
-  <?cxm end if?>
+  <?pux end if?>
 
 where *condition* is a boolean Python expression typically resolving to
 ``True`` or ``False``. Of course, the expression can resolve to any other
@@ -262,31 +262,31 @@ source and embed a ``<loan>`` in it for each loan the current customer
 has::
 
   <customer id="${customer.id}" ...>
-  <?cxm if customer.id = loan.customer_id?>
+  <?pux if customer.id = loan.customer_id?>
     <loan id="${loan.id}" ... />
-  <?cxm end if?>
+  <?pux end if?>
   </customer>
   
 Security considerations
 -----------------------
 
-Cxm templates can contain arbitrary Python code that can do pretty much
+Pux templates can contain arbitrary Python code that can do pretty much
 everything any Python script can do. To achieve the concise and powerful
-possibilities available to templates, on a technical level cxm liberally
+possibilities available to templates, on a technical level pux liberally
 uses ``eval()`` and ``exec``. Both of them imply that you think about who
-can modify cxm templates and how.
+can modify pux templates and how.
 
-Just like any Python code, cxm templates can remove files, connect to
-databases, send emails and so on. This enables anybody how can modify a cxm
+Just like any Python code, pux templates can remove files, connect to
+databases, send emails and so on. This enables anybody how can modify a pux
 template to remove or modify important system files or publish sensitive
-data processed by cxm to unintended places.
+data processed by pux to unintended places.
 
-Keep this in mind when deploying cxm based applications within your
+Keep this in mind when deploying pux based applications within your
 organization.
 
-The easiest solution to ensure that your cxm based application does not do
-anything worse that other applications is to integrate cxm templates in the
-same organizational processes as Python code. Typically this means that cxm
+The easiest solution to ensure that your pux based application does not do
+anything worse that other applications is to integrate pux templates in the
+same organizational processes as Python code. Typically this means that pux
 templates are modified only by developers, are put under the same version
 control as Python source code and use the same test and release management
 process as the rest of your Python application.
@@ -325,27 +325,27 @@ __version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _Description = 'convert CSV, PRN, etc. to XML based on a template'
 
-_log = logging.getLogger('cxm')
+_log = logging.getLogger('pux')
 
-class CxmError(Exception):
+class PuxError(Exception):
     pass
 
-class CxmSyntaxError(CxmError):
+class PuxSyntaxError(PuxError):
     pass
 
-class CxmValueError(CxmError):
+class PuxValueError(PuxError):
     pass
 
-class CxmNode(object):
+class PuxNode(object):
     def __init__(self, name=None):
         self.name = name
         self.childNodes = None
 
-    def addChild(self, cxmNodeToAdd):
+    def addChild(self, puxNodeToAdd):
         if self.childNodes is None:
-            self.childNodes = [cxmNodeToAdd]
+            self.childNodes = [puxNodeToAdd]
         else:
-            self.childNodes.append(cxmNodeToAdd)
+            self.childNodes.append(puxNodeToAdd)
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         raise NotImplementedError() # pragma: no cover
@@ -363,9 +363,9 @@ class _Variables(object):
             value = values[index]
             self.__dict__[name] = value
 
-class CxmForNode(CxmNode):
+class PuxForNode(PuxNode):
     def __init__(self, rider):
-        super(CxmForNode, self).__init__('for')
+        super(PuxForNode, self).__init__('for')
         self.rider = rider
 
     def write(self, xmlWriter, sourceNameToSourceMap):
@@ -374,47 +374,47 @@ class CxmForNode(CxmNode):
         variables = _Variables()
         for row in source.data:
             variables.setNamesAndValues(source.interface.fieldNames, row)
-            oldVariables = globals().get('_cxmVariables')
-            globals()['_cxmVariables'] = variables
+            oldVariables = globals().get('_puxVariables')
+            globals()['_puxVariables'] = variables
             globals()[self.rider] = variables
             if self.childNodes:
-                for cxmNode in self.childNodes:
-                    cxmNode.write(xmlWriter, sourceNameToSourceMap)
+                for puxNode in self.childNodes:
+                    puxNode.write(xmlWriter, sourceNameToSourceMap)
             del globals()[self.rider]
             if oldVariables is not None:
-                globals()['_cxmVariables'] = oldVariables
+                globals()['_puxVariables'] = oldVariables
             else:
-                del globals()['_cxmVariables']
+                del globals()['_puxVariables']
 
-class CxmIfNode(CxmNode):
+class PuxIfNode(PuxNode):
     """
     Node to write children only if a condition if fulfilled. The condition is text describing a
     Python expression to be processed using ``eval()``.
     """
     def __init__(self, condition):
-        super(CxmIfNode, self).__init__('if')
+        super(PuxIfNode, self).__init__('if')
         self.condition = condition
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         if self.childNodes:
             conditionFulfilled = eval(self.condition)
             if conditionFulfilled:
-                for cxmNode in self.childNodes:
-                    cxmNode.write(xmlWriter, sourceNameToSourceMap)
+                for puxNode in self.childNodes:
+                    puxNode.write(xmlWriter, sourceNameToSourceMap)
 
-class CxmPythonNode(CxmNode):
+class PuxPythonNode(PuxNode):
     """
     Node to execute arbitrary Python code.
     """
     def __init__(self, code):
         assert code is not None
-        super(CxmPythonNode, self).__init__('python')
+        super(PuxPythonNode, self).__init__('python')
         self.code = code
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         exec self.code in globals()
 
-class ElementNode(CxmNode):
+class ElementNode(PuxNode):
     def __init__(self, name, attributes):
         super(ElementNode, self).__init__(name)
         self.attributeTemplates = []
@@ -439,17 +439,17 @@ class ElementNode(CxmNode):
                 processedAttributes[name] = attributeValue
         xmlWriter.startTag(self.name, processedAttributes)
         if self.childNodes:
-            for cxmNode in self.childNodes:
-                cxmNode.write(xmlWriter, sourceNameToSourceMap)
+            for puxNode in self.childNodes:
+                puxNode.write(xmlWriter, sourceNameToSourceMap)
         xmlWriter.endTag(self.name)
             
-class DataNode(CxmNode):
+class DataNode(PuxNode):
     def __init__(self, name, data):
         assert data is not None
         super(DataNode, self).__init__(name)
         self.data = data
 
-    def addChild(self, cxmNodeToAdd, sourceNameToSourceMap):
+    def addChild(self, puxNodeToAdd, sourceNameToSourceMap):
         raise TypeError('data node cannot not have children')
 
 class TextNode(DataNode):
@@ -477,11 +477,11 @@ class ProcessInstructionNode(DataNode):
         assert xmlWriter
         xmlWriter.processingInstruction(self.target, self.data)
 
-class CxmInlineSyntaxError(CxmSyntaxError):
+class PuxInlineSyntaxError(PuxSyntaxError):
     # TODO: Add error location.
     pass
 
-class CxmInlineValueError(CxmError):
+class PuxInlineValueError(PuxError):
     # TODO: Add error location.
     pass
 
@@ -519,7 +519,7 @@ class _InlineTemplate(object):
                     self._text = u''
                 else:
                     # TODO: Add location to error message.
-                    raise CxmInlineSyntaxError(u'$ must be followed by $ or { but found: %r' % ch)
+                    raise PuxInlineSyntaxError(u'$ must be followed by $ or { but found: %r' % ch)
             elif self._state == _InlineTemplate._StateInPlaceHolder:
                 if ch == '}':
                     self._append(_InlineTemplate._ItemCode, _InlineTemplate._StateInText)
@@ -531,9 +531,9 @@ class _InlineTemplate(object):
             self._append(_InlineTemplate._ItemText)
         elif self._state == _InlineTemplate._StateInTextAfterDollar:
             # TODO: Add location to error message.
-            raise CxmInlineSyntaxError(u'$ at end of template must be followed by $')
+            raise PuxInlineSyntaxError(u'$ at end of template must be followed by $')
         elif self._state == _InlineTemplate._StateInPlaceHolder:
-            raise CxmInlineSyntaxError('place holder must end with }')
+            raise PuxInlineSyntaxError('place holder must end with }')
         else:
             assert False
 
@@ -558,9 +558,9 @@ class _InlineTemplate(object):
         result = u''
 
         # If there are no variables (for example when using Python constants or expressions
-        # without a <?cxm for?>), use an empty dummy variable dump.
-        if '_cxmVariables' not in globals():
-            globals()['_cxmVariables'] = _Variables()
+        # without a <?pux for?>), use an empty dummy variable dump.
+        if '_puxVariables' not in globals():
+            globals()['_puxVariables'] = _Variables()
 
         for itemType, itemText in self._items:
             if itemType == _InlineTemplate._ItemCode:
@@ -572,7 +572,7 @@ class _InlineTemplate(object):
                 except Exception, error:
                     _log.error(u'cannot evaluate expression: %s', itemText)
                     _log.error(u'currently defined variables:')
-                    variables = globals()['_cxmVariables']
+                    variables = globals()['_puxVariables']
                     for variableName in sorted(variables.__dict__.keys()):
                         _log.error(u'  %s = %s', variableName, repr(variables.__dict__[variableName]))
                     detailMessage = unicode(error)
@@ -582,7 +582,7 @@ class _InlineTemplate(object):
                         if unknownVariableName:
                             detailMessage = u'cannot find column "%s"' % unknownVariableName
                     _log.exception(error)
-                    raise CxmValueError(u'cannot evaluate expression: %r: %s' % (itemText, detailMessage))
+                    raise PuxValueError(u'cannot evaluate expression: %r: %s' % (itemText, detailMessage))
             elif itemType == _InlineTemplate._ItemText:
                 result += itemText
             else:
@@ -616,59 +616,59 @@ class _InlineTemplate(object):
                 assert False
         return result
             
-class CxmTemplate(object):
-    def __init__(self, cxmFilePath):
-        self.content = CxmNode()
-        self._cxmStack = [self.content]
+class PuxTemplate(object):
+    def __init__(self, puxFilePath):
+        self.content = PuxNode()
+        self._puxStack = [self.content]
         self._commandStack = []
     
-        _log.info('read template "%s"', cxmFilePath)
-        domDocument = minidom.parse(cxmFilePath)
+        _log.info('read template "%s"', puxFilePath)
+        domDocument = minidom.parse(puxFilePath)
         self._processNode(domDocument)
 
     @property
-    def currentCxmNode(self):
+    def currentPuxNode(self):
         """
-        The `CxmNode` children currently should be appended to.
+        The `PuxNode` children currently should be appended to.
         """
-        assert len(self._cxmStack)
-        return self._cxmStack[-1]
+        assert len(self._puxStack)
+        return self._puxStack[-1]
 
     @property
     def currentCommand(self):
         """
-        The `CxmNode` of currently active command, e.g. ``<?cxm for ...?>``.
+        The `PuxNode` of currently active command, e.g. ``<?pux for ...?>``.
         """
         assert len(self._commandStack)
         return self._commandStack[-1]
 
-    def _pushCxmNode(self, cxmNode):
-        assert cxmNode is not None
-        self._cxmStack.append(cxmNode)
+    def _pushPuxNode(self, puxNode):
+        assert puxNode is not None
+        self._puxStack.append(puxNode)
 
-    def _popCxmNode(self):
+    def _popPuxNode(self):
         # TODO: Add proper exception
-        assert self._cxmStack
+        assert self._puxStack
         # TODO: Validate that popped command matches expected node name.
-        self._cxmStack.pop()
+        self._puxStack.pop()
         
-    def _pushCommand(self, cxmCommandNode):
-        assert cxmCommandNode
-        self._commandStack.append(cxmCommandNode)
-        self._pushCxmNode(cxmCommandNode)
+    def _pushCommand(self, puxCommandNode):
+        assert puxCommandNode
+        self._commandStack.append(puxCommandNode)
+        self._pushPuxNode(puxCommandNode)
 
     def _popCommand(self, expectedCommand):
         assert expectedCommand is not None
         # TODO: Add proper exception
         assert self._commandStack
         self._commandStack.pop()
-        self._popCxmNode()
+        self._popPuxNode()
 
-    def _addChild(self, cxmNode):
-        assert cxmNode
-        self.currentCxmNode.addChild(cxmNode)
+    def _addChild(self, puxNode):
+        assert puxNode
+        self.currentPuxNode.addChild(puxNode)
         
-    def _createCxmProcessingNode(self, domProcessingNode):
+    def _createPuxProcessingNode(self, domProcessingNode):
         assert domProcessingNode
         
     def _processNode(self, domNode):
@@ -676,16 +676,16 @@ class CxmTemplate(object):
         for node in domNode.childNodes:
             _log.debug(u'process dom node: %s', node)
             nodeType = node.nodeType
-            indent = '  ' * 2 * len(self._cxmStack)
+            indent = '  ' * 2 * len(self._puxStack)
             if nodeType == Node.ELEMENT_NODE:
                 tagName = node.tagName
                 attributes = node.attributes.items()
                 _log.debug(u'%sadd tag: %s; %s', indent, tagName, attributes)
                 elementNode = ElementNode(tagName, attributes)
                 self._addChild(elementNode)
-                self._pushCxmNode(elementNode)
+                self._pushPuxNode(elementNode)
                 self._processNode(node)
-                self._popCxmNode()
+                self._popPuxNode()
             elif nodeType == Node.TEXT_NODE:
                 _log.debug(u'%sadd text: %r' , indent, node.data)
                 self._addChild(TextNode(node.data))
@@ -695,60 +695,60 @@ class CxmTemplate(object):
             elif nodeType == Node.PROCESSING_INSTRUCTION_NODE:
                 target = node.target
                 data = node.data
-                if target == 'cxm':
-                    # TODO: Use Python tokenizer to split and syntax check cxm processing instructions. 
+                if target == 'pux':
+                    # TODO: Use Python tokenizer to split and syntax check pux processing instructions. 
                     words = data.strip().split()
                     if not words:
-                        raise CxmSyntaxError('cxm command must be specified')
+                        raise PuxSyntaxError('pux command must be specified')
                     command = words[0]
                     wordCount = len(words)
                     if command == 'for':
                         if wordCount != 2:
-                            raise CxmSyntaxError(u'for command must match <?cxm for {rider}?> but is: %s' % data)
+                            raise PuxSyntaxError(u'for command must match <?pux for {rider}?> but is: %s' % data)
                         rider = words[1]
-                        cxmForNode = CxmForNode(rider)
-                        _log.debug(u'%sadd cxm command: %s %s', indent, command, rider)
-                        self._addChild(cxmForNode)
-                        self._pushCommand(cxmForNode)
+                        puxForNode = PuxForNode(rider)
+                        _log.debug(u'%sadd pux command: %s %s', indent, command, rider)
+                        self._addChild(puxForNode)
+                        self._pushCommand(puxForNode)
                     elif command == 'end':
                         if wordCount == 1:
-                            raise CxmInlineSyntaxError(u'cxm command to end must be specified')
+                            raise PuxInlineSyntaxError(u'pux command to end must be specified')
                         if wordCount > 2:
-                            raise CxmInlineSyntaxError(u'text after cxm command to end must be removed: %r' % words[2:])
+                            raise PuxInlineSyntaxError(u'text after pux command to end must be removed: %r' % words[2:])
                         commandToEnd = words[1]
-                        _log.debug(u'%send cxm command: %s', indent, commandToEnd)
+                        _log.debug(u'%send pux command: %s', indent, commandToEnd)
                         self._popCommand(commandToEnd)
                     elif command == 'if':
                         if wordCount < 2:
-                            raise CxmSyntaxError(u'if command must match <?cxm if {condition}?> but is: %s' % data)
-                        # TODO: Remove check below once Python tokenizer is used to parse cxm processing instructions.
+                            raise PuxSyntaxError(u'if command must match <?pux if {condition}?> but is: %s' % data)
+                        # TODO: Remove check below once Python tokenizer is used to parse pux processing instructions.
                         if not data.startswith('if'):
                             raise NotImplementedError("cannot process white space before 'if'")
                         condition = data[2:]
-                        cxmIfNode = CxmIfNode(condition)
-                        _log.debug(u'%sadd cxm command: %s %s', indent, command, condition)
-                        self._addChild(cxmIfNode)
-                        self._pushCommand(cxmIfNode)
+                        puxIfNode = PuxIfNode(condition)
+                        _log.debug(u'%sadd pux command: %s %s', indent, command, condition)
+                        self._addChild(puxIfNode)
+                        self._pushCommand(puxIfNode)
                     elif command == 'import':
                         # TODO: Use python tokenizer to validate that module name is a Python name.
                         # TODO: Add 'import x as y' syntax.
                         if wordCount == 1:
-                            raise CxmInlineSyntaxError(u'Python module to import must be specified')
+                            raise PuxInlineSyntaxError(u'Python module to import must be specified')
                         if wordCount > 2:
-                            raise CxmInlineSyntaxError(u'text after Python module to import must be removed: %r' % words[2:])
+                            raise PuxInlineSyntaxError(u'text after Python module to import must be removed: %r' % words[2:])
                         moduleToImport = words[1]
                         try:
                             _log.info('import %s', moduleToImport)
                             globals()[moduleToImport] = __import__(moduleToImport)
                         except Exception, error:
-                            raise CxmError(u'cannot cxm import module %r: %s' % (moduleToImport, error))
+                            raise PuxError(u'cannot pux import module %r: %s' % (moduleToImport, error))
                     elif command == 'python':
                         code = data[len('python'):]
-                        cmxPythonNode = CxmPythonNode(code)
-                        _log.debug(u'%sadd cxm command: %s %s', indent, command, code)
+                        cmxPythonNode = PuxPythonNode(code)
+                        _log.debug(u'%sadd pux command: %s %s', indent, command, code)
                         self._addChild(cmxPythonNode)
                     else:
-                        raise CxmSyntaxError(u'cannot process unknown cxm command: <?cxm %s ...?>' % target)
+                        raise PuxSyntaxError(u'cannot process unknown pux command: <?pux %s ...?>' % target)
                 else:
                     raise NotImplementedError(u'target=%r' % target)
             else:
@@ -787,12 +787,12 @@ def _checkPythonName(name, text):
             tokenCount += 1
             if tokenCount == 1:
                 if tokyType != token.NAME:
-                    raise CxmSyntaxError(u'%s must be a Python name but is: %r' % (name, text))
+                    raise PuxSyntaxError(u'%s must be a Python name but is: %r' % (name, text))
             else:
                 # TODO: Improve error message by describing what a valid Python name actually is.
-                raise CxmSyntaxError(u'%s must be a valid Python name but is (type=%s): %r' % (name, tokyType, text))
+                raise PuxSyntaxError(u'%s must be a valid Python name but is (type=%s): %r' % (name, tokyType, text))
     if not tokenCount:
-        raise CxmSyntaxError(u'%s must be a Python name instead of being empty')
+        raise PuxSyntaxError(u'%s must be a Python name instead of being empty')
 
 def splitDataSourceDefintion(definition):
     """
@@ -850,8 +850,8 @@ class Converter(object):
         _log.info('write output "%s"', targetXmlFilePath)
         with open(targetXmlFilePath, 'wb') as targetXmlFile:
             with loxun.XmlWriter(targetXmlFile, pretty=False, sourceEncoding='utf-8') as self._xml:
-                for cxmNode in self._template.content.childNodes:
-                    cxmNode.write(self._xml, self._sourceNameToSourceMap)
+                for puxNode in self._template.content.childNodes:
+                    puxNode.write(self._xml, self._sourceNameToSourceMap)
             self._xml = None
 
     def dataFor(self, dataName):
@@ -862,10 +862,10 @@ class Converter(object):
     def _validateDataName(self, name):
         assert name is not None
         if not name:
-            raise CxmValueError('data source name must not be empty')
+            raise PuxValueError('data source name must not be empty')
         # TODO: Validate that ``name`` is a valid Python name.
         if not name in self._sourceNameToSourceMap:
-            raise CxmValueError('data name is %r but must be one of: %s' % (name, sorted(self._sourceNameToSourceMap.keys())))
+            raise PuxValueError('data name is %r but must be one of: %s' % (name, sorted(self._sourceNameToSourceMap.keys())))
 
 def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding='utf-8'):
     assert template is not None
@@ -894,7 +894,7 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding
 
 def _parsedOptions(arguments):
     usage = 'usage: %prog [options] TEMPLATE [DATASOURCE ...]'
-    epilog = 'TEMPLATE is an XML file typically using \'.cxm\' as suffix. DATASOURCE describes a data source using \'NAME[:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/cxm/>.'
+    epilog = 'TEMPLATE is an XML file typically using \'.pux\' as suffix. DATASOURCE describes a data source using \'NAME[:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/pux/>.'
     parser = optparse.OptionParser(usage=usage, description=_Description, epilog=epilog, version=__version__)
     parser.add_option('-o', '--output',dest='outXmlPath', metavar='FILE',
         help='XML file where to store output (default: same as TEMPLATE but with suffix \'.xml\'')
@@ -902,7 +902,7 @@ def _parsedOptions(arguments):
     options, others = parser.parse_args(arguments)
     if not others:
         parser.error('TEMPLATE to process must be specified')
-    cxmTemplatePath = others[0]
+    puxTemplatePath = others[0]
     sourceDefinitions = others[1:]
     
     # Create sources from text matching: 'name:data@cid'
@@ -913,17 +913,17 @@ def _parsedOptions(arguments):
             if name in dataSourceMap:
                 parser.error(u'duplicate data source name must be resolved: %s' % name)
             dataSourceMap[name] = (dataPath, icdPath)
-        except CxmSyntaxError, error:
+        except PuxSyntaxError, error:
             parser.error('cannot process data source definition: %s' % error)
 
     # Compute output file.
     if options.outXmlPath is None:
         XmlSuffix = '.xml'
-        baseCxmTemplatePath, cxmTemplateSuffix = os.path.splitext(cxmTemplatePath)
-        if cxmTemplateSuffix.lower() == XmlSuffix.lower():
-            parser.error('--output must be specified or suffix of TEMPLATE must be changed to something other than %r' % cxmTemplateSuffix)
-        options.outXmlPath = baseCxmTemplatePath + XmlSuffix
-    return options, cxmTemplatePath, dataSourceMap
+        basePuxTemplatePath, puxTemplateSuffix = os.path.splitext(puxTemplatePath)
+        if puxTemplateSuffix.lower() == XmlSuffix.lower():
+            parser.error('--output must be specified or suffix of TEMPLATE must be changed to something other than %r' % puxTemplateSuffix)
+        options.outXmlPath = basePuxTemplatePath + XmlSuffix
+    return options, puxTemplatePath, dataSourceMap
 
 def main(arguments=None):
     """
@@ -939,12 +939,12 @@ def main(arguments=None):
     exitCode = 1
     exitError = None
     try:
-        options, cxmTemplatePath, dataSourceMap = _parsedOptions(actualArguments[1:])
-        template = CxmTemplate(cxmTemplatePath)
+        options, puxTemplatePath, dataSourceMap = _parsedOptions(actualArguments[1:])
+        template = PuxTemplate(puxTemplatePath)
         if dataSourceMap:
             convert(template, dataSourceMap, options.outXmlPath)
         else:
-            # No data source means: validate *.cxm without conversion.
+            # No data source means: validate *.pux without conversion.
             pass
         exitCode = 0
     except KeyboardInterrupt, error:

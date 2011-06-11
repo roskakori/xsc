@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<text><?cxm python
+<?xml version="1.0" encoding="utf-8"?>
+<text><?pux python
 import errno
 eAccess = errno.EACCES
 ?>errno.EACCES = ${errno.EACCES}; eAccess = ${eAccess}</text>

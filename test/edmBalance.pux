@@ -1,9 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- CXM template for EDM balance. -->
 <waste:WasteHandlingNotification
     xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:waste="http://edm.gv.at/schema/WasteBalanceInterfaceV2">
-  <?cxm for edmNotification?>
+  <?pux for edmNotification?>
   <SpecifiedNotification>
     <!-- Konstante -->
     <TypeCode>${edmNotification.SpecifiedNotification_TypeCode}</TypeCode>
@@ -16,10 +16,10 @@
       <EndDate>${edmNotification.CoveredPeriod_EndDate}</EndDate>
     </CoveredPeriod>
   </SpecifiedNotification>
-  <?cxm end for?>
-  <?cxm for edmNotification?>
-  <?cxm for edmPeriod?>
-  <?cxm if edmNotification.ObligatedParty_ID == edmPeriod.TakeOverParty_ID?>
+  <?pux end for?>
+  <?pux for edmNotification?>
+  <?pux for edmPeriod?>
+  <?pux if edmNotification.ObligatedParty_ID == edmPeriod.TakeOverParty_ID?>
   <SpecifiedSinglePeriodWasteHandlingNotification>
     <SpecifiedWasteHandlingNotificationEntry>
       <WasteMaterialMovement>
@@ -63,9 +63,9 @@
       </WasteMaterialMovement>
     </SpecifiedWasteHandlingNotificationEntry>
   </SpecifiedSinglePeriodWasteHandlingNotification>
-  <?cxm end if?>
-  <?cxm end for?>
-  <?cxm end for?>
+  <?pux end if?>
+  <?pux end for?>
+  <?pux end for?>
 </waste:WasteHandlingNotification>
 
 

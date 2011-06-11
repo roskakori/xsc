@@ -4,7 +4,7 @@ Installer for cxm.
 Developer cheat sheet
 ---------------------
 
-Install developer build:
+Install developer build::
 
   $ sudo python setup.py develop
 
@@ -33,13 +33,13 @@ Upload release to PyPI::
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from setuptools import setup
 
-import cxm
+import pux
 
 setup(
-    name="cxm",
-    version=cxm.__version__,
-    py_modules=["cxm"],
-    description=cxm._Description,
+    name="pux",
+   puxrsion=pux.__version__,
+    py_modules=["pux"],
+    description=pux._Description,
     install_requires=[
         "coverage>=3.2",
         "cutplace>=0.6.7",
@@ -48,7 +48,7 @@ setup(
     ],
     entry_points = {
         'console_scripts': [
-            'cxm = cxm:mainWithExit'
+            'pux = pux:mainWithExit'
         ],
     },
     test_suite = "nose.collector",
@@ -57,7 +57,7 @@ setup(
     author_email="roskakori@users.sourceforge.net",
     url="http://pypi.python.org/pypi/cxm/",
     license="GNU Library or Lesser General Public License (LGPL)",
-    long_description=cxm.__doc__, #@UndefinedVariable
+    long_description=pux.__doc__, #@UndefinedVariable
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
