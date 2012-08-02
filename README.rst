@@ -25,11 +25,11 @@ or::
 Provided you are connected to the internet, this also installs a few
 required Python modules:
 
-  * coverage, a developer module for testing
-  * cutplace, a tool to describe and validate data
-  * loxun, a module to write XML files
-  * nose, a developer module for testing
-  * xlrd, a module to read Excel files
+* coverage, a developer module for testing
+* cutplace, a tool to describe and validate data
+* loxun, a module to write XML files
+* nose, a developer module for testing
+* xlrd, a module to read Excel files
 
 All of them are available from PyPI and can be downloaded and installed
 separately.
