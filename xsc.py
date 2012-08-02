@@ -262,7 +262,7 @@ source and embed a ``<loan>`` in it for each loan the current customer
 has::
 
   <customer id="${customer.id}" ...>
-  <?xsc if customer.id = loan.customer_id?>
+  <?xsc if customer.id == loan.customer_id?>
     <loan id="${loan.id}" ... />
   <?xsc end if?>
   </customer>
@@ -273,7 +273,7 @@ Security considerations
 Xsc templates can contain arbitrary Python code that can do pretty much
 everything any Python script can do. To achieve the concise and powerful
 possibilities available to templates, on a technical level xsc liberally
-uses ``eval()`` and ``exec``. Both of them imply that you think about who
+uses ``evaluated()`` and ``exec``. Both of them imply that you think about who
 can modify xsc templates and how.
 
 Just like any Python code, xsc templates can remove files, connect to
@@ -316,11 +316,10 @@ import StringIO
 from xml.dom import minidom
 from xml.dom.minidom import Node
 
-import cutplace
 import cutplace.interface
 import loxun
 
-__version_info__ = (0, 1, 1)
+__version_info__ = (0, 1, 2)
 __version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _Description = 'convert CSV, PRN, etc. to XML based on a template'
@@ -389,7 +388,7 @@ class XscForNode(XscNode):
 class XscIfNode(XscNode):
     """
     Node to write children only if a condition if fulfilled. The condition is text describing a
-    Python expression to be processed using ``eval()``.
+    Python expression to be processed using ``evaluated()``.
     """
     def __init__(self, condition):
         super(XscIfNode, self).__init__('if')
@@ -430,7 +429,7 @@ class ElementNode(XscNode):
     def write(self, xmlWriter, sourceNameToSourceMap):
         processedAttributes = {}
         for name, attributeTemplate in self.attributeTemplates:
-            attributeValue = attributeTemplate.eval()
+            attributeValue = attributeTemplate.evaluated()
             if name == u'xmlns':
                 xmlWriter.addNamespace(u'', attributeValue)
             elif name.startswith(u'xmlns:'):
@@ -459,7 +458,7 @@ class TextNode(DataNode):
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         assert xmlWriter
-        xmlWriter.text(self.template.eval())
+        xmlWriter.text(self.template.evaluated())
 
 class CommentNode(DataNode):
     def __init__(self, data):
@@ -550,7 +549,7 @@ class _InlineTemplate(object):
                 result = attributeErrorMatch.group('attributeName')
         return result
 
-    def eval(self):
+    def evaluated(self):
         """
         The value resulting by evaluating expressions embedded in ``${...}`` using
         current ``globals()``.
@@ -605,7 +604,7 @@ class _InlineTemplate(object):
     def __repr__(self):
         return '_InlineTemplate(%s)' % self._items
 
-    def unicode(self):
+    def __unicode__(self):
         result = u''
         for itemType, itemText in self._items:
             if itemType == _InlineTemplate._ItemCode:
