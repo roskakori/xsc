@@ -2,11 +2,11 @@
 <!-- A simple list of all customers. -->
 <customers>
   <person/>
-  <?pux for customers?>
+  <?xsc for customers?>
   <person>
     <surname>${customers.surname}</surname>
     <firstname>${customers.surname}</firstname>
     <dateOfBirth>${customers.dateOfBirth}</dateOfBirth>
   </person>
-  <?pux end for?>
+  <?xsc end for?>
 </customers>

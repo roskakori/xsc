@@ -2,6 +2,6 @@
 <!-- Various constructs left empty -->
 <data>
   <empty/>
-  <?pux for customers?><?pux end for?>
-  <?pux if True?><?pux end if?>
+  <?xsc for customers?><?xsc end for?>
+  <?xsc if True?><?xsc end if?>
 </data>

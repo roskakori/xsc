@@ -1,5 +1,5 @@
 """
-Pux is a command line tool and Python module to convert column based files
+Xsc is a command line tool and Python module to convert column based files
 such as CSV and PRN to hierarchical XML files.
 
 It uses a template, which is a valid XML document itself with XML
@@ -11,10 +11,10 @@ code to embed data.
 Installation
 ------------
 
-Pux is available from `PyPI <http://pypi.python.org/>`_ and can be
+Xsc is available from `PyPI <http://pypi.python.org/>`_ and can be
 installed using::
 
-  $ easy_install pux
+  $ easy_install xsc
 
 Provided you are connected to the internet, this also installs a few
 required Python modules:
@@ -24,7 +24,7 @@ required Python modules:
   * loxun, a module to write XML files
   * nose, a developer module for testing
   * xlrd, a module to read Excel files
-
+pux
 All of them are available from PyPI and can be downloaded and installed
 separately.
 
@@ -32,7 +32,7 @@ separately.
 Tutorial
 --------
 
-This section provides a tutorial on using pux to convert a simple CSV file
+This section provides a tutorial on using xsc to convert a simple CSV file
 containing customer data in an XML file.
 
 Here is the source CSV file::
@@ -44,7 +44,7 @@ Here is the source CSV file::
 
 As you can see, the first row contains headings for the various columns
 where the other rows contain the actual data. This is the kind of CSV file
-pux can process out of the box. If your CSV file has header rows or columns
+xsc can process out of the box. If your CSV file has header rows or columns
 that cannot be mapped to a header, you either have to remove them manually
 or provide a specific interface control document using `cutplace
 <http://cutplace.sourceforge.net>`_.
@@ -70,7 +70,7 @@ Our goal is to get an XML document that looks like::
     </person>
   </customers>
 
-First, we have to provide a pux template. This is a XML document by itself
+First, we have to provide a xsc template. This is a XML document by itself
 and can contain processing instructions to read data from data sources such
 as CSV files and use inline Python expressions to generate text and XML
 attribute values.
@@ -79,23 +79,23 @@ To get the desired output, we need the following template::
 
   <?xml version="1.0" encoding="utf-8"?>
   <customers>
-    <?pux for customers?>
+    <?xsc for customers?>
     <person>
       <surname>${customers.surname}</surname>
       <firstname>${customers.surname}</firstname>
       <dateOfBirth>${customers.dateOfBirth}</dateOfBirth>
     </person>
-    <?pux end for?>
+    <?xsc end for?>
   </customers>
 
 The line::
 
-  <?pux for customers?>
+  <?xsc for customers?>
 
-tells pux to read the data source  ``customers`` row by row and generate
+tells xsc to read the data source  ``customers`` row by row and generate
 XML code until::
 
-  <?pux end for?>
+  <?xsc end for?>
 
 for each row. As you probably guessed, we are going to point the data
 source ``customers`` to our CSV file.
@@ -104,7 +104,7 @@ In the line::
 
   <surname>${customers.surname}</surname>
 
-the ``${customers.surname}`` tells pux to insert the value of the row
+the ``${customers.surname}`` tells xsc to insert the value of the row
 ``surname`` in current row read from the data source ``customers``.  In the
 CSV file provided, the first data row has a ``surname`` column with the
 value ``Doe``. For the next row, the value is ``Miller`` and so on.
@@ -127,29 +127,29 @@ Note that all values read are unicode strings, so you have to convert them
 to Python ``long``, ``Decimal``, ``datetime`` and so on if you want to use
 them for computations on any of these types.
 
-Now that we have a template (``customers.pux``) and a data source
+Now that we have a template (``customers.xsc``) and a data source
 (``customers.csv``), we can finally generate our XML document. Open a new
-console and change the current folder to the location where the CSV and CXM
+console and change the current folder to the location where the CSV and XSC
 file are stored. Then run::
 
-  $ pux customers.pux customers:customers.csv
+  $ xsc customers.xsc customers:customers.csv
 
-This tells pux to generate an XML file based on the template
-``customers.pux`` with a data source named ``customers`` read from the file
+This tells xsc to generate an XML file based on the template
+``customers.xsc`` with a data source named ``customers`` read from the file
 ``customers.csv``.
 
 By default, the output is stored in the same folder as the template under
 the same name but with the suffix ``.xml``. You can set a specific output
 file using the command line option ``--output``, for example::
 
-  $ pux --output /tmp/northern_customers.xml customers.pux customers:customers.csv
+  $ xsc --output /tmp/northern_customers.xml customers.xsc customers:customers.csv
 
 If ``customers.csv`` has a more complex format than "CSV with a header
 row", you can describe it in a cutplace interface definition in, say,
 ``cid_customers.xls`` and add it to the data source description after an at
 sign (@)::
 
-  $ pux customers.pux customers:customers.csv@cid_customers.xls
+  $ xsc customers.xsc customers:customers.csv@cid_customers.xls
 
 To learn more about cutplace and how you can use it to describe a data
 source, visit <http://cutplace.sourceforge.net>.
@@ -162,33 +162,33 @@ compute text and attribute values in the document. Simply embed the code in
 a ``${...}``, for example::
 
     <img src="${name.lower()}.png" alt="image of ${name}"/>
-    This is ${name}. 
+    This is ${name}.
 
 Assuming the Python variable ``name`` holds the value ``"Bob"``, the
 resulting XML code is::
 
     <img src="bob.png" alt="image of Bob"/>
-    This is Bob. 
+    This is Bob.
 
-To set variables to values retrieved from a data source, use ``<?pux
+To set variables to values retrieved from a data source, use ``<?xsc
 for?>`` (see `Traversing data`_). To set variables to specific values using
-possibly complex computations, use ``<?pux python?>`` (see `Executing
+possibly complex computations, use ``<?xsc python?>`` (see `Executing
 Python code`_).
 
 
 Importing Python modules
 ------------------------
 
-To import a Python module for usage by CXM expressions, use::
+To import a Python module for usage by XSC expressions, use::
 
-  <?pux import some_module?>
+  <?xsc import some_module?>
 
 For example::
 
-  <?pux import errno?>
+  <?xsc import errno?>
 
 This imports the Python standard module `errno` so it can be used
-by CXM expressions, for example::
+by XSC expressions, for example::
 
   <text>access error code = ${errno.EACCES}</text>
 
@@ -198,20 +198,20 @@ Executing Python code
 
 To execute arbitrary Python code, use::
 
-  <?pux python
+  <?xsc python
   code
   ?>
 
 For example::
 
-  <?pux python
+  <?xsc python
   import errno
   accessErrorCode
   accessErrorCode = errno.EACCES
   ?>
 
 Variables, functions, imports and so are are added to the global scope and
-can be used by later ``<?pux python?>`` instructions and inline code.
+can be used by later ``<?xsc python?>`` instructions and inline code.
 
 
 Traversing data
@@ -219,36 +219,36 @@ Traversing data
 
 To traverse all rows in a data source specified on the command line, use::
 
-  <?pux for dataSource?>
+  <?xsc for dataSource?>
   ...
-  <?pux end for?>
+  <?xsc end for?>
 
 For example, consider a data source defined using::
 
-  $ pux ... customer:customers.csv@icd_customers.xls
+  $ xsc ... customer:customers.csv@icd_customers.xls
 
-The name under which the data source is available for pux is `customer`.
+The name under which the data source is available for xsc is `customer`.
 The data to process are stored in a CSV file in `customers.csv`. A
 description of the file as a cutplace interface definition is stored in
 `icd_customers.xls`.
 
 To add a tag `<customer>` for each customer in `customers.csv`, use::
 
-  <?pux for customer?>
+  <?xsc for customer?>
   <customer id="${customder.id}" surname="${customer.lastName}" .../>
-  <?pux end for?>
+  <?xsc end for?>
 
 
 Conditionals and joins
 ----------------------
 
 Sometimes XML fragments are optional and should show up in the output
-only if certain conditions are met. For such a case, pux provides a
+only if certain conditions are met. For such a case, xsc provides a
 processing instruction of the form::
 
-  <?pux if condition?>
+  <?xsc if condition?>
   ...
-  <?pux end if?>
+  <?xsc end if?>
 
 where *condition* is a boolean Python expression typically resolving to
 ``True`` or ``False``. Of course, the expression can resolve to any other
@@ -262,36 +262,36 @@ source and embed a ``<loan>`` in it for each loan the current customer
 has::
 
   <customer id="${customer.id}" ...>
-  <?pux if customer.id = loan.customer_id?>
+  <?xsc if customer.id = loan.customer_id?>
     <loan id="${loan.id}" ... />
-  <?pux end if?>
+  <?xsc end if?>
   </customer>
-  
+
 Security considerations
 -----------------------
 
-Pux templates can contain arbitrary Python code that can do pretty much
+Xsc templates can contain arbitrary Python code that can do pretty much
 everything any Python script can do. To achieve the concise and powerful
-possibilities available to templates, on a technical level pux liberally
+possibilities available to templates, on a technical level xsc liberally
 uses ``eval()`` and ``exec``. Both of them imply that you think about who
-can modify pux templates and how.
+can modify xsc templates and how.
 
-Just like any Python code, pux templates can remove files, connect to
-databases, send emails and so on. This enables anybody how can modify a pux
+Just like any Python code, xsc templates can remove files, connect to
+databases, send emails and so on. This enables anybody how can modify a xsc
 template to remove or modify important system files or publish sensitive
-data processed by pux to unintended places.
+data processed by xsc to unintended places.
 
-Keep this in mind when deploying pux based applications within your
+Keep this in mind when deploying xsc based applications within your
 organization.
 
-The easiest solution to ensure that your pux based application does not do
-anything worse that other applications is to integrate pux templates in the
-same organizational processes as Python code. Typically this means that pux
+The easiest solution to ensure that your xsc based application does not do
+anything worse that other applications is to integrate xsc templates in the
+same organizational processes as Python code. Typically this means that xsc
 templates are modified only by developers, are put under the same version
 control as Python source code and use the same test and release management
 process as the rest of your Python application.
 """
-# Copyright (C) 2011 Thomas Aglassinger
+# Copyright (C) 2011-2012 Thomas Aglassinger
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU Lesser General Public License as published by
@@ -314,7 +314,7 @@ import token
 import tokenize
 import StringIO
 from xml.dom import minidom
-from xml.dom.minidom import Node 
+from xml.dom.minidom import Node
 
 import cutplace
 import cutplace.interface
@@ -325,27 +325,27 @@ __version__ = '.'.join(unicode(item) for item in __version_info__)
 
 _Description = 'convert CSV, PRN, etc. to XML based on a template'
 
-_log = logging.getLogger('pux')
+_log = logging.getLogger('xsc')
 
-class PuxError(Exception):
+class XscError(Exception):
     pass
 
-class PuxSyntaxError(PuxError):
+class XscSyntaxError(XscError):
     pass
 
-class PuxValueError(PuxError):
+class XscValueError(XscError):
     pass
 
-class PuxNode(object):
+class XscNode(object):
     def __init__(self, name=None):
         self.name = name
         self.childNodes = None
 
-    def addChild(self, puxNodeToAdd):
+    def addChild(self, xscNodeToAdd):
         if self.childNodes is None:
-            self.childNodes = [puxNodeToAdd]
+            self.childNodes = [xscNodeToAdd]
         else:
-            self.childNodes.append(puxNodeToAdd)
+            self.childNodes.append(xscNodeToAdd)
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         raise NotImplementedError() # pragma: no cover
@@ -363,9 +363,9 @@ class _Variables(object):
             value = values[index]
             self.__dict__[name] = value
 
-class PuxForNode(PuxNode):
+class XscForNode(XscNode):
     def __init__(self, rider):
-        super(PuxForNode, self).__init__('for')
+        super(XscForNode, self).__init__('for')
         self.rider = rider
 
     def write(self, xmlWriter, sourceNameToSourceMap):
@@ -374,47 +374,47 @@ class PuxForNode(PuxNode):
         variables = _Variables()
         for row in source.data:
             variables.setNamesAndValues(source.interface.fieldNames, row)
-            oldVariables = globals().get('_puxVariables')
-            globals()['_puxVariables'] = variables
+            oldVariables = globals().get('_xscVariables')
+            globals()['_xscVariables'] = variables
             globals()[self.rider] = variables
             if self.childNodes:
-                for puxNode in self.childNodes:
-                    puxNode.write(xmlWriter, sourceNameToSourceMap)
+                for xscNode in self.childNodes:
+                    xscNode.write(xmlWriter, sourceNameToSourceMap)
             del globals()[self.rider]
             if oldVariables is not None:
-                globals()['_puxVariables'] = oldVariables
+                globals()['_xscVariables'] = oldVariables
             else:
-                del globals()['_puxVariables']
+                del globals()['_xscVariables']
 
-class PuxIfNode(PuxNode):
+class XscIfNode(XscNode):
     """
     Node to write children only if a condition if fulfilled. The condition is text describing a
     Python expression to be processed using ``eval()``.
     """
     def __init__(self, condition):
-        super(PuxIfNode, self).__init__('if')
+        super(XscIfNode, self).__init__('if')
         self.condition = condition
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         if self.childNodes:
             conditionFulfilled = eval(self.condition)
             if conditionFulfilled:
-                for puxNode in self.childNodes:
-                    puxNode.write(xmlWriter, sourceNameToSourceMap)
+                for xscNode in self.childNodes:
+                    xscNode.write(xmlWriter, sourceNameToSourceMap)
 
-class PuxPythonNode(PuxNode):
+class XscPythonNode(XscNode):
     """
     Node to execute arbitrary Python code.
     """
     def __init__(self, code):
         assert code is not None
-        super(PuxPythonNode, self).__init__('python')
+        super(XscPythonNode, self).__init__('python')
         self.code = code
 
     def write(self, xmlWriter, sourceNameToSourceMap):
         exec self.code in globals()
 
-class ElementNode(PuxNode):
+class ElementNode(XscNode):
     def __init__(self, name, attributes):
         super(ElementNode, self).__init__(name)
         self.attributeTemplates = []
@@ -439,24 +439,24 @@ class ElementNode(PuxNode):
                 processedAttributes[name] = attributeValue
         xmlWriter.startTag(self.name, processedAttributes)
         if self.childNodes:
-            for puxNode in self.childNodes:
-                puxNode.write(xmlWriter, sourceNameToSourceMap)
+            for xscNode in self.childNodes:
+                xscNode.write(xmlWriter, sourceNameToSourceMap)
         xmlWriter.endTag(self.name)
-            
-class DataNode(PuxNode):
+
+class DataNode(XscNode):
     def __init__(self, name, data):
         assert data is not None
         super(DataNode, self).__init__(name)
         self.data = data
 
-    def addChild(self, puxNodeToAdd, sourceNameToSourceMap):
+    def addChild(self, xscNodeToAdd, sourceNameToSourceMap):
         raise TypeError('data node cannot not have children')
 
 class TextNode(DataNode):
     def __init__(self, data):
         super(TextNode, self).__init__('text', data)
         self.template = _InlineTemplate(data)
-    
+
     def write(self, xmlWriter, sourceNameToSourceMap):
         assert xmlWriter
         xmlWriter.text(self.template.eval())
@@ -468,7 +468,7 @@ class CommentNode(DataNode):
     def write(self, xmlWriter, sourceNameToSourceMap):
         assert xmlWriter
         xmlWriter.comment(self.data)
-    
+
 class ProcessInstructionNode(DataNode):
     def __init__(self, target, data):
         super(ProcessInstructionNode, self).__init__(u'instruction: %s' % target, data)
@@ -477,11 +477,11 @@ class ProcessInstructionNode(DataNode):
         assert xmlWriter
         xmlWriter.processingInstruction(self.target, self.data)
 
-class PuxInlineSyntaxError(PuxSyntaxError):
+class XscInlineSyntaxError(XscSyntaxError):
     # TODO: Add error location.
     pass
 
-class PuxInlineValueError(PuxError):
+class XscInlineValueError(XscError):
     # TODO: Add error location.
     pass
 
@@ -493,10 +493,10 @@ class _InlineTemplate(object):
     _StateInText = 't'
     _StateInTextAfterDollar = '$'
     _StateInPlaceHolder = '*'
-    
+
     _ItemText = 'text'
     _ItemCode = 'code'
-    
+
     attributeErrorRegEx = re.compile("\\'(?P<className>[a-zA-Z_][a-zA-Z0-9_]*)\\'.+\\'(?P<attributeName>[a-zA-Z_][a-zA-Z0-9_]*)\\'")
         # Regular expression to extract attribute name from attribute error.
 
@@ -519,7 +519,7 @@ class _InlineTemplate(object):
                     self._text = u''
                 else:
                     # TODO: Add location to error message.
-                    raise PuxInlineSyntaxError(u'$ must be followed by $ or { but found: %r' % ch)
+                    raise XscInlineSyntaxError(u'$ must be followed by $ or { but found: %r' % ch)
             elif self._state == _InlineTemplate._StateInPlaceHolder:
                 if ch == '}':
                     self._append(_InlineTemplate._ItemCode, _InlineTemplate._StateInText)
@@ -531,9 +531,9 @@ class _InlineTemplate(object):
             self._append(_InlineTemplate._ItemText)
         elif self._state == _InlineTemplate._StateInTextAfterDollar:
             # TODO: Add location to error message.
-            raise PuxInlineSyntaxError(u'$ at end of template must be followed by $')
+            raise XscInlineSyntaxError(u'$ at end of template must be followed by $')
         elif self._state == _InlineTemplate._StateInPlaceHolder:
-            raise PuxInlineSyntaxError('place holder must end with }')
+            raise XscInlineSyntaxError('place holder must end with }')
         else:
             assert False
 
@@ -558,9 +558,9 @@ class _InlineTemplate(object):
         result = u''
 
         # If there are no variables (for example when using Python constants or expressions
-        # without a <?pux for?>), use an empty dummy variable dump.
-        if '_puxVariables' not in globals():
-            globals()['_puxVariables'] = _Variables()
+        # without a <?xsc for?>), use an empty dummy variable dump.
+        if '_xscVariables' not in globals():
+            globals()['_xscVariables'] = _Variables()
 
         for itemType, itemText in self._items:
             if itemType == _InlineTemplate._ItemCode:
@@ -572,7 +572,7 @@ class _InlineTemplate(object):
                 except Exception, error:
                     _log.error(u'cannot evaluate expression: %s', itemText)
                     _log.error(u'currently defined variables:')
-                    variables = globals()['_puxVariables']
+                    variables = globals()['_xscVariables']
                     for variableName in sorted(variables.__dict__.keys()):
                         _log.error(u'  %s = %s', variableName, repr(variables.__dict__[variableName]))
                     detailMessage = unicode(error)
@@ -582,7 +582,7 @@ class _InlineTemplate(object):
                         if unknownVariableName:
                             detailMessage = u'cannot find column "%s"' % unknownVariableName
                     _log.exception(error)
-                    raise PuxValueError(u'cannot evaluate expression: %r: %s' % (itemText, detailMessage))
+                    raise XscValueError(u'cannot evaluate expression: %r: %s' % (itemText, detailMessage))
             elif itemType == _InlineTemplate._ItemText:
                 result += itemText
             else:
@@ -601,7 +601,7 @@ class _InlineTemplate(object):
 
     def __str__(self):
         return unicode(self).encode('utf-8')
-    
+
     def __repr__(self):
         return '_InlineTemplate(%s)' % self._items
 
@@ -615,77 +615,77 @@ class _InlineTemplate(object):
             else:
                 assert False
         return result
-            
-class PuxTemplate(object):
-    def __init__(self, puxFilePath):
-        self.content = PuxNode()
-        self._puxStack = [self.content]
+
+class XscTemplate(object):
+    def __init__(self, xscFilePath):
+        self.content = XscNode()
+        self._xscStack = [self.content]
         self._commandStack = []
-    
-        _log.info('read template "%s"', puxFilePath)
-        domDocument = minidom.parse(puxFilePath)
+
+        _log.info('read template "%s"', xscFilePath)
+        domDocument = minidom.parse(xscFilePath)
         self._processNode(domDocument)
 
     @property
-    def currentPuxNode(self):
+    def currentXscNode(self):
         """
-        The `PuxNode` children currently should be appended to.
+        The `XscNode` children currently should be appended to.
         """
-        assert len(self._puxStack)
-        return self._puxStack[-1]
+        assert len(self._xscStack)
+        return self._xscStack[-1]
 
     @property
     def currentCommand(self):
         """
-        The `PuxNode` of currently active command, e.g. ``<?pux for ...?>``.
+        The `XscNode` of currently active command, e.g. ``<?xsc for ...?>``.
         """
         assert len(self._commandStack)
         return self._commandStack[-1]
 
-    def _pushPuxNode(self, puxNode):
-        assert puxNode is not None
-        self._puxStack.append(puxNode)
+    def _pushXscNode(self, xscNode):
+        assert xscNode is not None
+        self._xscStack.append(xscNode)
 
-    def _popPuxNode(self):
+    def _popXscNode(self):
         # TODO: Add proper exception
-        assert self._puxStack
+        assert self._xscStack
         # TODO: Validate that popped command matches expected node name.
-        self._puxStack.pop()
-        
-    def _pushCommand(self, puxCommandNode):
-        assert puxCommandNode
-        self._commandStack.append(puxCommandNode)
-        self._pushPuxNode(puxCommandNode)
+        self._xscStack.pop()
+
+    def _pushCommand(self, xscCommandNode):
+        assert xscCommandNode
+        self._commandStack.append(xscCommandNode)
+        self._pushXscNode(xscCommandNode)
 
     def _popCommand(self, expectedCommand):
         assert expectedCommand is not None
         # TODO: Add proper exception
         assert self._commandStack
         self._commandStack.pop()
-        self._popPuxNode()
+        self._popXscNode()
 
-    def _addChild(self, puxNode):
-        assert puxNode
-        self.currentPuxNode.addChild(puxNode)
-        
-    def _createPuxProcessingNode(self, domProcessingNode):
+    def _addChild(self, xscNode):
+        assert xscNode
+        self.currentXscNode.addChild(xscNode)
+
+    def _createXscProcessingNode(self, domProcessingNode):
         assert domProcessingNode
-        
+
     def _processNode(self, domNode):
         assert domNode
         for node in domNode.childNodes:
             _log.debug(u'process dom node: %s', node)
             nodeType = node.nodeType
-            indent = '  ' * 2 * len(self._puxStack)
+            indent = '  ' * 2 * len(self._xscStack)
             if nodeType == Node.ELEMENT_NODE:
                 tagName = node.tagName
                 attributes = node.attributes.items()
                 _log.debug(u'%sadd tag: %s; %s', indent, tagName, attributes)
                 elementNode = ElementNode(tagName, attributes)
                 self._addChild(elementNode)
-                self._pushPuxNode(elementNode)
+                self._pushXscNode(elementNode)
                 self._processNode(node)
-                self._popPuxNode()
+                self._popXscNode()
             elif nodeType == Node.TEXT_NODE:
                 _log.debug(u'%sadd text: %r' , indent, node.data)
                 self._addChild(TextNode(node.data))
@@ -695,65 +695,65 @@ class PuxTemplate(object):
             elif nodeType == Node.PROCESSING_INSTRUCTION_NODE:
                 target = node.target
                 data = node.data
-                if target == 'pux':
-                    # TODO: Use Python tokenizer to split and syntax check pux processing instructions. 
+                if target == 'xsc':
+                    # TODO: Use Python tokenizer to split and syntax check xsc processing instructions.
                     words = data.strip().split()
                     if not words:
-                        raise PuxSyntaxError('pux command must be specified')
+                        raise XscSyntaxError('xsc command must be specified')
                     command = words[0]
                     wordCount = len(words)
                     if command == 'for':
                         if wordCount != 2:
-                            raise PuxSyntaxError(u'for command must match <?pux for {rider}?> but is: %s' % data)
+                            raise XscSyntaxError(u'for command must match <?xsc for {rider}?> but is: %s' % data)
                         rider = words[1]
-                        puxForNode = PuxForNode(rider)
-                        _log.debug(u'%sadd pux command: %s %s', indent, command, rider)
-                        self._addChild(puxForNode)
-                        self._pushCommand(puxForNode)
+                        xscForNode = XscForNode(rider)
+                        _log.debug(u'%sadd xsc command: %s %s', indent, command, rider)
+                        self._addChild(xscForNode)
+                        self._pushCommand(xscForNode)
                     elif command == 'end':
                         if wordCount == 1:
-                            raise PuxInlineSyntaxError(u'pux command to end must be specified')
+                            raise XscInlineSyntaxError(u'xsc command to end must be specified')
                         if wordCount > 2:
-                            raise PuxInlineSyntaxError(u'text after pux command to end must be removed: %r' % words[2:])
+                            raise XscInlineSyntaxError(u'text after xsc command to end must be removed: %r' % words[2:])
                         commandToEnd = words[1]
-                        _log.debug(u'%send pux command: %s', indent, commandToEnd)
+                        _log.debug(u'%send xsc command: %s', indent, commandToEnd)
                         self._popCommand(commandToEnd)
                     elif command == 'if':
                         if wordCount < 2:
-                            raise PuxSyntaxError(u'if command must match <?pux if {condition}?> but is: %s' % data)
-                        # TODO: Remove check below once Python tokenizer is used to parse pux processing instructions.
+                            raise XscSyntaxError(u'if command must match <?xsc if {condition}?> but is: %s' % data)
+                        # TODO: Remove check below once Python tokenizer is used to parse xsc processing instructions.
                         if not data.startswith('if'):
                             raise NotImplementedError("cannot process white space before 'if'")
                         condition = data[2:]
-                        puxIfNode = PuxIfNode(condition)
-                        _log.debug(u'%sadd pux command: %s %s', indent, command, condition)
-                        self._addChild(puxIfNode)
-                        self._pushCommand(puxIfNode)
+                        xscIfNode = XscIfNode(condition)
+                        _log.debug(u'%sadd xsc command: %s %s', indent, command, condition)
+                        self._addChild(xscIfNode)
+                        self._pushCommand(xscIfNode)
                     elif command == 'import':
                         # TODO: Use python tokenizer to validate that module name is a Python name.
                         # TODO: Add 'import x as y' syntax.
                         if wordCount == 1:
-                            raise PuxInlineSyntaxError(u'Python module to import must be specified')
+                            raise XscInlineSyntaxError(u'Python module to import must be specified')
                         if wordCount > 2:
-                            raise PuxInlineSyntaxError(u'text after Python module to import must be removed: %r' % words[2:])
+                            raise XscInlineSyntaxError(u'text after Python module to import must be removed: %r' % words[2:])
                         moduleToImport = words[1]
                         try:
                             _log.info('import %s', moduleToImport)
                             globals()[moduleToImport] = __import__(moduleToImport)
                         except Exception, error:
-                            raise PuxError(u'cannot pux import module %r: %s' % (moduleToImport, error))
+                            raise XscError(u'cannot xsc import module %r: %s' % (moduleToImport, error))
                     elif command == 'python':
                         code = data[len('python'):]
-                        cmxPythonNode = PuxPythonNode(code)
-                        _log.debug(u'%sadd pux command: %s %s', indent, command, code)
+                        cmxPythonNode = XscPythonNode(code)
+                        _log.debug(u'%sadd xsc command: %s %s', indent, command, code)
                         self._addChild(cmxPythonNode)
                     else:
-                        raise PuxSyntaxError(u'cannot process unknown pux command: <?pux %s ...?>' % target)
+                        raise XscSyntaxError(u'cannot process unknown xsc command: <?xsc %s ...?>' % target)
                 else:
                     raise NotImplementedError(u'target=%r' % target)
             else:
                 raise NotImplementedError(u'nodeType=%r' % nodeType)
-    
+
 class DataSource(object):
     """
     Source data and interface to be converted to XML.
@@ -765,7 +765,7 @@ class DataSource(object):
         self.dataFilePath = None
         self.data = None
         self._instructionStack = []
-    
+
     def setInterface(self, interface):
         self.interface = interface
 
@@ -787,12 +787,12 @@ def _checkPythonName(name, text):
             tokenCount += 1
             if tokenCount == 1:
                 if tokyType != token.NAME:
-                    raise PuxSyntaxError(u'%s must be a Python name but is: %r' % (name, text))
+                    raise XscSyntaxError(u'%s must be a Python name but is: %r' % (name, text))
             else:
                 # TODO: Improve error message by describing what a valid Python name actually is.
-                raise PuxSyntaxError(u'%s must be a valid Python name but is (type=%s): %r' % (name, tokyType, text))
+                raise XscSyntaxError(u'%s must be a valid Python name but is (type=%s): %r' % (name, tokyType, text))
     if not tokenCount:
-        raise PuxSyntaxError(u'%s must be a Python name instead of being empty')
+        raise XscSyntaxError(u'%s must be a Python name instead of being empty')
 
 def splitDataSourceDefintion(definition):
     """
@@ -843,15 +843,15 @@ class Converter(object):
         self._validateDataName(name)
         source = self._sourceNameToSourceMap[name]
         source.setData(dataFilePath)
-        
+
     def write(self, targetXmlFilePath):
         assert targetXmlFilePath is not None
 
         _log.info('write output "%s"', targetXmlFilePath)
         with open(targetXmlFilePath, 'wb') as targetXmlFile:
             with loxun.XmlWriter(targetXmlFile, pretty=False, sourceEncoding='utf-8') as self._xml:
-                for puxNode in self._template.content.childNodes:
-                    puxNode.write(self._xml, self._sourceNameToSourceMap)
+                for xscNode in self._template.content.childNodes:
+                    xscNode.write(self._xml, self._sourceNameToSourceMap)
             self._xml = None
 
     def dataFor(self, dataName):
@@ -862,10 +862,10 @@ class Converter(object):
     def _validateDataName(self, name):
         assert name is not None
         if not name:
-            raise PuxValueError('data source name must not be empty')
+            raise XscValueError('data source name must not be empty')
         # TODO: Validate that ``name`` is a valid Python name.
         if not name in self._sourceNameToSourceMap:
-            raise PuxValueError('data name is %r but must be one of: %s' % (name, sorted(self._sourceNameToSourceMap.keys())))
+            raise XscValueError('data name is %r but must be one of: %s' % (name, sorted(self._sourceNameToSourceMap.keys())))
 
 def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding='utf-8'):
     assert template is not None
@@ -894,7 +894,7 @@ def convert(template, sourceNameToSourceMap, targetXmlFilePath, autoDataEncoding
 
 def _parsedOptions(arguments):
     usage = 'usage: %prog [options] TEMPLATE [DATASOURCE ...]'
-    epilog = 'TEMPLATE is an XML file typically using \'.pux\' as suffix. DATASOURCE describes a data source using \'NAME[:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/pux/>.'
+    epilog = 'TEMPLATE is an XML file typically using \'.xsc\' as suffix. DATASOURCE describes a data source using \'NAME[:DATAFILE[@CIDFILE]]\'. For more information, visit <http://pypi.python.org/pypi/xsc/>.'
     parser = optparse.OptionParser(usage=usage, description=_Description, epilog=epilog, version=__version__)
     parser.add_option('-o', '--output',dest='outXmlPath', metavar='FILE',
         help='XML file where to store output (default: same as TEMPLATE but with suffix \'.xml\'')
@@ -902,9 +902,9 @@ def _parsedOptions(arguments):
     options, others = parser.parse_args(arguments)
     if not others:
         parser.error('TEMPLATE to process must be specified')
-    puxTemplatePath = others[0]
+    xscTemplatePath = others[0]
     sourceDefinitions = others[1:]
-    
+
     # Create sources from text matching: 'name:data@cid'
     dataSourceMap = {}
     for sourceDefinition in sourceDefinitions:
@@ -913,17 +913,17 @@ def _parsedOptions(arguments):
             if name in dataSourceMap:
                 parser.error(u'duplicate data source name must be resolved: %s' % name)
             dataSourceMap[name] = (dataPath, icdPath)
-        except PuxSyntaxError, error:
+        except XscSyntaxError, error:
             parser.error('cannot process data source definition: %s' % error)
 
     # Compute output file.
     if options.outXmlPath is None:
         XmlSuffix = '.xml'
-        basePuxTemplatePath, puxTemplateSuffix = os.path.splitext(puxTemplatePath)
-        if puxTemplateSuffix.lower() == XmlSuffix.lower():
-            parser.error('--output must be specified or suffix of TEMPLATE must be changed to something other than %r' % puxTemplateSuffix)
-        options.outXmlPath = basePuxTemplatePath + XmlSuffix
-    return options, puxTemplatePath, dataSourceMap
+        baseXscTemplatePath, xscTemplateSuffix = os.path.splitext(xscTemplatePath)
+        if xscTemplateSuffix.lower() == XmlSuffix.lower():
+            parser.error('--output must be specified or suffix of TEMPLATE must be changed to something other than %r' % xscTemplateSuffix)
+        options.outXmlPath = baseXscTemplatePath + XmlSuffix
+    return options, xscTemplatePath, dataSourceMap
 
 def main(arguments=None):
     """
@@ -939,12 +939,12 @@ def main(arguments=None):
     exitCode = 1
     exitError = None
     try:
-        options, puxTemplatePath, dataSourceMap = _parsedOptions(actualArguments[1:])
-        template = PuxTemplate(puxTemplatePath)
+        options, xscTemplatePath, dataSourceMap = _parsedOptions(actualArguments[1:])
+        template = XscTemplate(xscTemplatePath)
         if dataSourceMap:
             convert(template, dataSourceMap, options.outXmlPath)
         else:
-            # No data source means: validate *.pux without conversion.
+            # No data source means: validate *.xsc without conversion.
             pass
         exitCode = 0
     except KeyboardInterrupt, error:

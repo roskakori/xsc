@@ -2,11 +2,11 @@
 <!-- A simple list of all customers using namespaced tags. -->
 <some:customers xmlns:some="http://example.com/some.xsd">
   <some:person/>
-  <?pux for customers?>
+  <?xsc for customers?>
   <some:person>
     <surname>${customers.surname}</surname>
     <firstname>${customers.surname}</firstname>
     <dateOfBirth>${customers.dateOfBirth}</dateOfBirth>
   </some:person>
-  <?pux end for?>
+  <?xsc end for?>
 </some:customers>

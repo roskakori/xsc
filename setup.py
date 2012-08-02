@@ -33,13 +33,13 @@ Upload release to PyPI::
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from setuptools import setup
 
-import pux
+import xsc
 
 setup(
-    name="pux",
-   puxrsion=pux.__version__,
-    py_modules=["pux"],
-    description=pux._Description,
+    name="xsc",
+    version=xsc.__version__,
+    py_modules=["xsc"],
+    description=xsc._Description,
     install_requires=[
         "coverage>=3.2",
         "cutplace>=0.6.7",
@@ -48,7 +48,7 @@ setup(
     ],
     entry_points = {
         'console_scripts': [
-            'pux = pux:mainWithExit'
+            'xsc = xsc:mainWithExit'
         ],
     },
     test_suite = "nose.collector",
@@ -57,7 +57,7 @@ setup(
     author_email="roskakori@users.sourceforge.net",
     url="http://pypi.python.org/pypi/cxm/",
     license="GNU Library or Lesser General Public License (LGPL)",
-    long_description=pux.__doc__, #@UndefinedVariable
+    long_description=xsc.__doc__, #@UndefinedVariable
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",

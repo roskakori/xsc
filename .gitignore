@@ -4,4 +4,4 @@
 /MANIFEST
 /build
 /dist
-/pux.egg-info
+/*.egg-info
