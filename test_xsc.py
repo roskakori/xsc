@@ -23,6 +23,7 @@ import unittest
 def _testFilePath(name):
     return os.path.join('test', name)
 
+_CommentXscPath = _testFilePath('comment.xsc')
 _CustomersXscPath = _testFilePath('customers.xsc')
 _EdmBalanceXscPath = _testFilePath('edmBalance.xsc')
 _EmptyXscPath = _testFilePath('empty.xsc')
@@ -126,6 +127,14 @@ class XscPythonTest(_ExpectedFileTest):
         xsc.convert(template, {}, targetXmlFilePath)
         self.assertFileMatches(targetXmlFilePath)
 
+class XscCommentTest(_ExpectedFileTest):
+    def testCanProcessComments(self):
+        template = xsc.XscTemplate(_CommentXscPath)
+        self.assertTrue(template)
+        targetXmlFilePath = os.path.join('test', 'comment.xml')
+        xsc.convert(template, {}, targetXmlFilePath)
+        self.assertFileMatches(targetXmlFilePath)
+
 class XscTest(unittest.TestCase):
     def testCanValidateEdmBalanceXsc(self):
         xscTemplate = xsc.XscTemplate(_EdmBalanceXscPath)
@@ -148,6 +157,7 @@ class XscTest(unittest.TestCase):
 
     def testCanConvertLoansBalance(self):
         template = xsc.XscTemplate(_CustomersXscPath)
+        # TODO: Implement test case to convert loans.
 
 class MainTest(_ExpectedFileTest):
     def assertXmlFileMatches(self, xscFilePath):

@@ -16,6 +16,11 @@ Upload release to PyPI::
 
   $ python setup.py test
   $ python setup.py sdist --formats=zip upload
+
+Tag a release::
+
+  $ git tag -a -m 'Tagged version 0.1.x.' v0.1.x
+  $ git push --tags
 """
 # Copyright (C) 2011 Thomas Aglassinger
 #

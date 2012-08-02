@@ -14,6 +14,10 @@ Installation
 Xsc is available from `PyPI <http://pypi.python.org/>`_ and can be
 installed using::
 
+  $ pip install xsc
+
+or::
+
   $ easy_install xsc
 
 Provided you are connected to the internet, this also installs a few
@@ -24,7 +28,7 @@ required Python modules:
   * loxun, a module to write XML files
   * nose, a developer module for testing
   * xlrd, a module to read Excel files
-pux
+
 All of them are available from PyPI and can be downloaded and installed
 separately.
 
@@ -267,13 +271,41 @@ has::
   <?xsc end if?>
   </customer>
 
+
+Comments
+--------
+
+As xsc templates are XML documents, they can contain XML comments, for example::
+
+    <!-- Some comment. -->
+
+Such comments are passed through and show up in the generated XML output.
+
+For comments on implementation details, todo notes and similar things, there
+is no point including them in the output especially if the output just acts
+as input to be automatically processed by another application.
+
+For these cases xsc supports a processing instruction for comments that do
+not show up in the output::
+
+    <?xsc # Some comment. ?>
+
+It can also spawn multiple lines::
+
+    <?xsc #
+    Some comment
+    spawning multiple
+    lines.
+    ?>
+
+
 Security considerations
 -----------------------
 
 Xsc templates can contain arbitrary Python code that can do pretty much
 everything any Python script can do. To achieve the concise and powerful
 possibilities available to templates, on a technical level xsc liberally
-uses ``evaluated()`` and ``exec``. Both of them imply that you think about who
+uses ``eval()`` and ``exec()``. Both of them imply that you think about who
 can modify xsc templates and how.
 
 Just like any Python code, xsc templates can remove files, connect to
@@ -746,10 +778,13 @@ class XscTemplate(object):
                         cmxPythonNode = XscPythonNode(code)
                         _log.debug(u'%sadd xsc command: %s %s', indent, command, code)
                         self._addChild(cmxPythonNode)
+                    elif command == '#':
+                        # Ignore xsc comment.
+                        pass
                     else:
                         raise XscSyntaxError(u'cannot process unknown xsc command: <?xsc %s ...?>' % target)
                 else:
-                    raise NotImplementedError(u'target=%r' % target)
+                    raise NotImplementedError(u'processing instructions for target %r must be removed because currently only <?xsc ...?> is implemented' % target)
             else:
                 raise NotImplementedError(u'nodeType=%r' % nodeType)
 
