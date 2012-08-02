@@ -1,4 +1,4 @@
-*.csv   text
-*.py    text
-*.txt   text
-*.xml   text
+*.csv   text=auto
+*.py    text=auto
+*.txt   text=auto
+*.xml   text=auto
